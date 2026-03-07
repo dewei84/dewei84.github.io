@@ -3,4 +3,4 @@ layout: page
 title: About
 ---
 
-Work in progress. Thanks for reading!
+For all the wonderful and precious memories we created and hold dear.
