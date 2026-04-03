@@ -4,18 +4,40 @@ title: Home
 ---
 
 <div class="posts">
+  {% assign category_order = "Together,Chloe,Brian" | split: "," %}
+
+  {% for category_name in category_order %}
+    {% assign posts = site.categories[category_name] %}
+    {% if posts %}
+      <section class="category-section">
+        <h2 class="category-title">{{ category_name }}</h2>
+        {% assign sorted_posts = posts | sort: "date" | reverse %}
+        {% for post in sorted_posts %}
+          <article class="post-listing">
+            <h3 class="post-listing-title">
+              <a href="{{ post.url | absolute_url }}">{{ post.title }}</a>
+            </h3>
+          </article>
+        {% endfor %}
+      </section>
+    {% endif %}
+  {% endfor %}
+
   {% assign sorted_categories = site.categories | sort %}
   {% for category in sorted_categories %}
-  <section class="category-section">
-    <h2 class="category-title">{{ category[0] }}</h2>
-    {% assign posts = category[1] | sort: "date" | reverse %}
-    {% for post in posts %}
-    <article class="post-listing">
-      <h3 class="post-listing-title">
-        <a href="{{ post.url | absolute_url }}">{{ post.title }}</a>
-      </h3>
-    </article>
-    {% endfor %}
-  </section>
+    {% assign category_name = category[0] %}
+    {% unless category_order contains category_name %}
+      <section class="category-section">
+        <h2 class="category-title">{{ category_name }}</h2>
+        {% assign posts = category[1] | sort: "date" | reverse %}
+        {% for post in posts %}
+          <article class="post-listing">
+            <h3 class="post-listing-title">
+              <a href="{{ post.url | absolute_url }}">{{ post.title }}</a>
+            </h3>
+          </article>
+        {% endfor %}
+      </section>
+    {% endunless %}
   {% endfor %}
 </div>
