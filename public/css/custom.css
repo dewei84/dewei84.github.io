@@ -15,6 +15,7 @@
 }
 
 html {
+  background-color: #12141b;
   background:
     radial-gradient(circle at top left, rgba(255, 138, 107, 0.12), transparent 28%),
     radial-gradient(circle at top right, rgba(136, 167, 255, 0.16), transparent 24%),
@@ -23,7 +24,7 @@ html {
 }
 
 body {
-  background: transparent;
+  background-color: #12141b;
   color: var(--text);
   font-family: "Sora", sans-serif;
   font-size: 0.95rem;
