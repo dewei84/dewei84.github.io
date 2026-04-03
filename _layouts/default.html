@@ -5,10 +5,7 @@
 
   <body>
 
-    {% include sidebar.html %}
-
-    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
-         content to avoid any CSS collisions with our real content. -->
+    <!-- Wrap holds the main page content. -->
     <div class="wrap">
       <div class="masthead">
         <div class="container">
@@ -22,10 +19,10 @@
       <div class="container content">
         {{ content }}
       </div>
+
+      <footer class="site-footer">
+        <span>&copy; {{ site.time | date: '%Y' }} dewei.sg</span>
+      </footer>
     </div>
-
-    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
-
-    <script src='{{ site.baseurl }}/public/js/script.js'></script>
   </body>
 </html>
