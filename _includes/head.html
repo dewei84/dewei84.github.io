@@ -16,6 +16,36 @@
   <link rel="canonical" href="{{ page.url | absolute_url }}">
   {% endif %}
 
+  {% assign og_title = site.title %}
+  {% assign og_description = site.description %}
+  {% assign og_image = '/public/apple-touch-icon-precomposed.png' | absolute_url %}
+  {% assign og_type = 'website' %}
+
+  {% if page.layout == 'post' %}
+    {% assign og_type = 'article' %}
+    {% assign og_title = page.title %}
+
+    {% if page.content contains 'poster="' %}
+      {% assign og_image = page.content | split: 'poster="' | last | split: '"' | first | strip %}
+    {% endif %}
+
+    {% assign post_after_video = page.content | split: '</video>' | last %}
+    {% assign post_lines = post_after_video | strip_html | split: '\n' %}
+    {% for line in post_lines %}
+      {% assign line_clean = line | strip %}
+      {% if line_clean != '' %}
+        {% assign og_description = line_clean %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  <meta property="og:type" content="{{ og_type }}">
+  <meta property="og:title" content="{{ og_title | escape }}">
+  <meta property="og:description" content="{{ og_description | normalize_whitespace | escape }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:image" content="{{ og_image | absolute_url }}">
+
   <link rel="stylesheet" href="{{ '/public/css/poole.css' | absolute_url }}">
   <link rel="stylesheet" href="{{ '/public/css/syntax.css' | absolute_url }}">
   <link rel="stylesheet" href="{{ '/public/css/lanyon.css' | absolute_url }}">
