@@ -7,11 +7,19 @@ layout: default
   {{ content }}
 </div>
 
-{% if site.related_posts.size >= 1 %}
+{% assign category_name = page.categories | first %}
+{% assign related_posts = site.categories[category_name]
+  | where_exp: "p", "p.url != page.url"
+  | sort: "date"
+  | reverse %}
+{% assign max_related_posts = 3 %}
+{% assign shown_count = 0 %}
+
+{% if related_posts.size > 0 or site.posts.size > 1 %}
 <div class="related">
   <h2>Keep Exploring</h2>
   <ul class="related-posts">
-    {% for post in site.related_posts limit:3 %}
+    {% for post in related_posts limit:max_related_posts %}
       <li>
         <h3>
           <a href="{{ site.baseurl }}{{ post.url }}">
@@ -19,7 +27,41 @@ layout: default
           </a>
         </h3>
       </li>
+      {% assign shown_count = shown_count | plus: 1 %}
     {% endfor %}
+
+    {% if shown_count < max_related_posts %}
+      {% assign remaining_slots = max_related_posts | minus: shown_count %}
+      {% assign fallback_count = 0 %}
+      {% for post in site.posts %}
+        {% if post.url != page.url %}
+          {% if category_name %}
+            {% unless post.categories contains category_name %}
+              <li>
+                <h3>
+                  <a href="{{ site.baseurl }}{{ post.url }}">
+                    {{ post.title }}
+                  </a>
+                </h3>
+              </li>
+              {% assign fallback_count = fallback_count | plus: 1 %}
+            {% endunless %}
+          {% else %}
+            <li>
+              <h3>
+                <a href="{{ site.baseurl }}{{ post.url }}">
+                  {{ post.title }}
+                </a>
+              </h3>
+            </li>
+            {% assign fallback_count = fallback_count | plus: 1 %}
+          {% endif %}
+        {% endif %}
+        {% if fallback_count >= remaining_slots %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
   </ul>
 </div>
 {% endif %}
