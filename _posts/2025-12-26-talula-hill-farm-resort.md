@@ -8,7 +8,7 @@ categories: Together
 <video 
     controls 
     width='720'
-    src="https://dewei-memories.s3.ap-southeast-1.amazonaws.com/videos/talula-hill-farm-resort-dec-2025.mp4"
+    src="https://dewei-memories.s3.ap-southeast-1.amazonaws.com/videos/talula-hill-farm-resort-dec-2025-4k.mp4"
     poster="https://dewei-memories.s3.ap-southeast-1.amazonaws.com/videos/posters/talula-hill-farm-resort.jpg"> 
 </video>
 

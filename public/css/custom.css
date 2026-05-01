@@ -43,6 +43,28 @@ a:focus {
   color: var(--accent-strong);
 }
 
+.download-video-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.download-video-link:hover,
+.download-video-link:focus {
+  color: var(--accent-strong);
+  text-decoration: none;
+}
+
+.download-video-link .material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 1.1em;
+  line-height: 1;
+}
+
 .sidebar {
   background:
     linear-gradient(180deg, rgba(15, 17, 24, 0.96), rgba(27, 31, 42, 0.96));
