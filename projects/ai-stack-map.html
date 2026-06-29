@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The AI Stack — Interdependence Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0A0E18;
+    --void2:#0D1320;
+    --band:#101727;
+    --card:#141d30;
+    --card2:#18223a;
+    --line:#283449;
+    --line2:#1c2638;
+    --text:#E7ECF6;
+    --muted:#7E90AE;
+    --muted2:#566884;
+    --signal:#46D6E6;     /* compute / silicon supply */
+    --copper:#E89154;     /* capital / ownership */
+    --glow:rgba(70,214,230,.55);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--void);color:var(--text);
+    font-family:"Space Grotesk",system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  body{min-height:100vh;
+    background:
+      radial-gradient(1200px 600px at 80% -5%, rgba(70,214,230,.07), transparent 60%),
+      radial-gradient(1000px 500px at 0% 105%, rgba(232,145,84,.06), transparent 55%),
+      var(--void);
+  }
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;}
+
+  /* ---------- shell ---------- */
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 120px;}
+  header{margin-bottom:18px;}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:12px;}
+  h1{font-size:clamp(26px,4.5vw,44px);font-weight:700;letter-spacing:-.02em;line-height:1.04;}
+  h1 .dim{color:var(--muted);}
+  .thesis{margin-top:14px;max-width:660px;color:var(--muted);font-size:15px;line-height:1.55;}
+  .thesis b{color:var(--text);font-weight:500;}
+
+  /* ---------- controls ---------- */
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:22px;}
+  .ctl-label{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted2);margin-right:4px;}
+  .pick{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--text);
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:7px 13px;cursor:pointer;transition:border-color .18s,background .18s,color .18s;}
+  .pick:hover{border-color:var(--signal);color:var(--signal);}
+  .pick.reset{color:var(--muted);border-style:dashed;}
+  .pick.reset:hover{border-color:var(--copper);color:var(--copper);}
+
+  /* ---------- legend ---------- */
+  .legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:18px;
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);}
+  .legend span{display:inline-flex;align-items:center;gap:8px;}
+  .swatch{width:26px;height:0;border-top:2px solid var(--signal);display:inline-block;}
+  .swatch.cap{border-top:2px dashed var(--copper);}
+
+  /* ---------- map ---------- */
+  .map{position:relative;margin-top:26px;border:1px solid var(--line2);border-radius:16px;
+    overflow:hidden;background:linear-gradient(180deg,var(--void2),var(--void));}
+  svg.edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;}
+
+  .layer{position:relative;z-index:1;display:grid;grid-template-columns:148px 1fr;
+    gap:18px;padding:20px 22px;border-bottom:1px solid var(--line2);}
+  .layer:last-child{border-bottom:none;}
+  .layer.power-band{background:rgba(232,145,84,.025);}
+  .rail{padding-top:4px;}
+  .rail .num{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted2);
+    letter-spacing:.05em;}
+  .rail .name{font-size:14.5px;font-weight:600;letter-spacing:-.01em;margin-top:3px;line-height:1.15;}
+  .rail .role{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--muted2);
+    margin-top:7px;line-height:1.4;letter-spacing:.02em;}
+  .rail .tick{width:26px;height:2px;background:var(--line);margin-top:11px;border-radius:2px;}
+  .layer[data-accent="copper"] .tick{background:var(--copper);}
+  .layer[data-accent="signal"] .tick{background:var(--signal);}
+
+  .nodes{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start;}
+  .node{position:relative;background:var(--card);border:1px solid var(--line);
+    border-radius:11px;padding:10px 13px;cursor:pointer;min-width:0;
+    transition:transform .18s,border-color .18s,background .18s,opacity .22s,box-shadow .22s;}
+  .node:hover{border-color:var(--signal);transform:translateY(-1px);}
+  .node .lab{font-size:14px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;}
+  .node .sub{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--muted);
+    margin-top:3px;white-space:nowrap;}
+  .node .tag{position:absolute;top:-7px;right:9px;font-family:"IBM Plex Mono",monospace;
+    font-size:9px;letter-spacing:.08em;text-transform:uppercase;background:var(--card2);
+    border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--muted2);}
+
+  /* states */
+  .map.has-selection .node{opacity:.22;}
+  .node.lit{opacity:1;border-color:var(--signal);box-shadow:0 0 0 1px var(--signal),0 0 22px -6px var(--glow);}
+  .node.selected{opacity:1;border-color:var(--text);
+    box-shadow:0 0 0 1.5px var(--text),0 0 30px -4px var(--glow);background:var(--card2);}
+  .node.lit .sub,.node.selected .sub{color:var(--text);}
+
+  /* ---------- detail panel ---------- */
+  .panel{position:fixed;z-index:20;right:20px;bottom:20px;width:340px;max-width:calc(100vw - 40px);
+    background:rgba(16,23,39,.96);backdrop-filter:blur(10px);
+    border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;
+    box-shadow:0 18px 50px -18px rgba(0,0,0,.8);
+    transform:translateY(14px);opacity:0;pointer-events:none;transition:.26s ease;}
+  .panel.open{transform:none;opacity:1;pointer-events:auto;}
+  .panel .ptag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--signal);}
+  .panel h3{font-size:20px;font-weight:700;letter-spacing:-.02em;margin-top:6px;}
+  .panel .pdesc{font-size:13px;color:var(--muted);line-height:1.5;margin-top:9px;}
+  .panel .grp{margin-top:14px;}
+  .panel .grp h4{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted2);margin-bottom:7px;}
+  .panel .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .panel .chip{font-family:"IBM Plex Mono",monospace;font-size:11.5px;padding:4px 9px;
+    border-radius:7px;border:1px solid var(--line);cursor:pointer;color:var(--text);
+    background:var(--card);transition:.16s;}
+  .panel .chip:hover{border-color:var(--signal);color:var(--signal);}
+  .panel .chip.cap{border-color:rgba(232,145,84,.5);color:var(--copper);}
+  .panel .close{position:absolute;top:13px;right:14px;background:none;border:none;
+    color:var(--muted);font-size:18px;cursor:pointer;line-height:1;font-family:monospace;}
+  .panel .close:hover{color:var(--text);}
+
+  .hint{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted2);
+    margin-top:14px;text-align:center;}
+
+  /* ---------- entrance ---------- */
+  .layer{opacity:0;transform:translateY(10px);animation:rise .5s ease forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+
+  @media (max-width:720px){
+    .wrap{padding:22px 14px 90px;}
+    .layer{grid-template-columns:1fr;gap:11px;padding:16px 15px;}
+    .rail{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+    .rail .tick{display:none;}
+    .rail .role{flex-basis:100%;margin-top:2px;}
+    .panel{left:12px;right:12px;bottom:12px;width:auto;}
+    svg.edges{opacity:.9;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .layer{animation:none;opacity:1;transform:none;}
+    *{transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Compute supply chain · mid-2026</div>
+    <h1>The AI stack,<br><span class="dim">wired end to end.</span></h1>
+    <p class="thesis">Every layer leans on the one beneath it — and the wiring crosses sideways in ways that aren't obvious. <b>Select any company</b> to light up everything it depends on and everything that depends on it.</p>
+
+    <div class="controls">
+      <span class="ctl-label">Trace</span>
+      <button class="pick" data-pick="tsmc">TSMC</button>
+      <button class="pick" data-pick="broadcom">Broadcom</button>
+      <button class="pick" data-pick="nvidia">Nvidia</button>
+      <button class="pick" data-pick="gcp">Google Cloud</button>
+      <button class="pick" data-pick="anthropic">Anthropic</button>
+      <button class="pick" data-pick="spacex">SpaceX</button>
+      <button class="pick reset" data-pick="">Reset</button>
+    </div>
+
+    <div class="legend">
+      <span><i class="swatch"></i> compute / silicon supply</span>
+      <span><i class="swatch cap"></i> capital · ownership stake</span>
+      <span class="mono">layers 01→05 = foundation → product</span>
+    </div>
+  </header>
+
+  <div class="map" id="map">
+    <svg class="edges" id="edges" preserveAspectRatio="none"></svg>
+    <!-- layers injected -->
+  </div>
+
+  <p class="hint mono">Tip: every chip on the map is fabricated by the company in layer 01.</p>
+</div>
+
+<!-- detail panel -->
+<div class="panel" id="panel">
+  <button class="close" id="panelClose">×</button>
+  <div class="ptag" id="pLayer"></div>
+  <h3 id="pName"></h3>
+  <p class="pdesc" id="pDesc"></p>
+  <div class="grp" id="gUp"><h4>Depends on</h4><div class="chips" id="upChips"></div></div>
+  <div class="grp" id="gDown"><h4>Supplies / enables</h4><div class="chips" id="downChips"></div></div>
+</div>
+
+<script>
+// ---------- data model ----------
+const LAYERS = [
+  {id:"apps",   num:"05", name:"Applications",       role:"what users actually touch", accent:"signal"},
+  {id:"models", num:"04", name:"Frontier models",    role:"the labs / model makers",   accent:"signal"},
+  {id:"cloud",  num:"03", name:"Data-center compute", role:"hyperscalers + landlords",  accent:"signal"},
+  {id:"silicon",num:"02", name:"Semiconductor chips", role:"GPUs, custom ASICs, design",accent:"copper"},
+  {id:"infra",  num:"01", name:"Infrastructure",      role:"foundry · power · land",    accent:"copper", power:true},
+];
+
+const NODES = [
+  // apps
+  {id:"chatgpt",  layer:"apps", lab:"ChatGPT",        sub:"consumer",        desc:"OpenAI's consumer assistant — the front door to GPT models."},
+  {id:"copilot",  layer:"apps", lab:"365 Copilot",    sub:"enterprise",      desc:"Microsoft's enterprise assistant, served largely by OpenAI models on Azure (and increasingly Maia silicon)."},
+  {id:"gem_app",  layer:"apps", lab:"Gemini app",     sub:"consumer",        desc:"Google's consumer Gemini experience."},
+  {id:"gem_ent",  layer:"apps", lab:"Gemini Enterprise",sub:"enterprise",    desc:"Google's agentic enterprise tier — the demand spike behind Google renting outside compute."},
+  {id:"claude_a", layer:"apps", lab:"Claude",         sub:"consumer · dev",  desc:"Anthropic's assistant and Claude Code / API surface."},
+  {id:"meta_ai",  layer:"apps", lab:"Meta AI",        sub:"in-app",          desc:"Llama-powered features inside Facebook, Instagram and WhatsApp."},
+
+  // models
+  {id:"gemini",   layer:"models", lab:"Google DeepMind", sub:"Gemini",       desc:"Google's frontier lab. Trains on Google's own TPUs but competes head-to-head with the labs Google also rents compute to."},
+  {id:"anthropic",layer:"models", lab:"Anthropic",       sub:"Claude",       desc:"Deliberately multi-sourced: trains and serves across AWS Trainium (primary), Google TPUs, Nvidia GPUs and SpaceX's Colossus — backed by both Amazon and Google.", tag:"multi-cloud"},
+  {id:"openai",   layer:"models", lab:"OpenAI",          sub:"GPT-5.2",      desc:"Anchored on Microsoft Azure, but spread across AWS Trainium, Cerebras, neoclouds and its own Broadcom-built 'Jalapeño' chip."},
+  {id:"meta",     layer:"models", lab:"Meta",            sub:"Llama",        desc:"Runs its own MTIA silicon at scale and also taps Google TPU capacity; the largest inference operator in the world."},
+  {id:"xai",      layer:"models", lab:"xAI",             sub:"Grok",         desc:"Merged into SpaceX in early 2026; its Colossus data centers became a compute-landlord business.", tag:"under SpaceX"},
+
+  // cloud
+  {id:"gcp",      layer:"cloud", lab:"Google Cloud",   sub:"hyperscaler",   desc:"Sells TPU + Nvidia capacity to outside labs (Anthropic, Meta) while running Gemini itself — and rents bridge GPUs from SpaceX to cover demand."},
+  {id:"aws",      layer:"cloud", lab:"AWS",            sub:"hyperscaler",   desc:"Anthropic's primary cloud and training partner (Project Rainier Trainium cluster); also supplies 2GW of Trainium to OpenAI."},
+  {id:"azure",    layer:"cloud", lab:"Microsoft Azure",sub:"hyperscaler",   desc:"OpenAI's primary cloud and largest financial backer; deploys its own Maia silicon alongside Nvidia and AMD."},
+  {id:"spacex",   layer:"cloud", lab:"SpaceX · Colossus",sub:"compute landlord",desc:"Inherited xAI's data centers and turned them into a leasing business — renting ~110k Nvidia GPUs to Google (~$920M/mo) and the full Colossus-1 output to Anthropic (~$1.25B/mo).", tag:"landlord"},
+  {id:"neocloud", layer:"cloud", lab:"Stargate / Neoclouds",sub:"Oracle · CoreWeave",desc:"OpenAI-aligned capacity outside the big three hyperscalers."},
+
+  // silicon
+  {id:"broadcom", layer:"silicon", lab:"Broadcom",     sub:"ASIC design",   desc:"The quiet center of gravity: co-designs custom accelerators for Google, Meta, Microsoft and OpenAI — ~60% of the custom-ASIC design market.", tag:"design"},
+  {id:"marvell",  layer:"silicon", lab:"Marvell",      sub:"ASIC design",   desc:"The other big ASIC design partner — works with AWS (Trainium) and Microsoft (Maia).", tag:"design"},
+  {id:"nvidia",   layer:"silicon", lab:"Nvidia",       sub:"GPU · ~70% share",desc:"Still the merchant default. Its GPUs sit inside every cloud and landlord on this map — and it holds a stake in OpenAI.", tag:"merchant"},
+  {id:"amd",      layer:"silicon", lab:"AMD",          sub:"GPU",           desc:"The merchant alternative bought alongside Nvidia by Azure and others."},
+  {id:"cerebras", layer:"silicon", lab:"Cerebras",     sub:"wafer-scale",   desc:"Wafer-scale systems supplying OpenAI under a multi-billion-dollar commitment."},
+  {id:"tpu",      layer:"silicon", lab:"Google TPU",   sub:"Ironwood · gen 7",desc:"Google's captive accelerator — but uniquely also sold to outside labs (Anthropic, Meta). Co-designed with Broadcom.", tag:"captive + sold"},
+  {id:"trainium", layer:"silicon", lab:"AWS Trainium", sub:"captive to AWS",desc:"Amazon's accelerator, co-designed with Marvell; powers Anthropic and OpenAI workloads on AWS."},
+  {id:"maia",     layer:"silicon", lab:"Microsoft Maia",sub:"Maia 200",     desc:"Azure's inference ASIC (Broadcom/Marvell), already serving OpenAI's GPT-5.2 and Copilot."},
+  {id:"mtia",     layer:"silicon", lab:"Meta MTIA",    sub:"captive to Meta",desc:"Meta's in-house accelerator family (Broadcom-designed) for recommendation and generative inference."},
+  {id:"jalapeno", layer:"silicon", lab:"OpenAI Jalapeño",sub:"inference ASIC",desc:"OpenAI's first custom chip, co-designed with Broadcom to cut its own inference costs."},
+
+  // infra
+  {id:"tsmc",     layer:"infra", lab:"TSMC",           sub:"foundry · ~92% of advanced AI silicon",desc:"The single point everything routes through: it physically fabricates virtually every chip above — Nvidia, AMD and every hyperscaler's custom ASIC.", tag:"foundry"},
+  {id:"power",    layer:"infra", lab:"Power & Grid",   sub:"gigawatts",     desc:"The real binding constraint. Data-center buildout is measured in GW and years — which is exactly why even Google rents bridge capacity rather than wait for its own."},
+];
+
+// from -> to (supplier/enabler -> consumer).  type: supply | capital | both
+const EDGES = [
+  // power underlies clouds + fabs
+  ["power","gcp","supply"],["power","aws","supply"],["power","azure","supply"],
+  ["power","spacex","supply"],["power","neocloud","supply"],["power","tsmc","supply"],
+  // TSMC fabricates the silicon
+  ["tsmc","nvidia","supply"],["tsmc","amd","supply"],["tsmc","cerebras","supply"],
+  ["tsmc","tpu","supply"],["tsmc","trainium","supply"],["tsmc","maia","supply"],
+  ["tsmc","mtia","supply"],["tsmc","jalapeno","supply"],
+  // design partners
+  ["broadcom","tpu","supply"],["broadcom","mtia","supply"],["broadcom","maia","supply"],["broadcom","jalapeno","supply"],
+  ["marvell","trainium","supply"],["marvell","maia","supply"],
+  // chips -> clouds / owners
+  ["nvidia","gcp","supply"],["nvidia","aws","supply"],["nvidia","azure","supply"],
+  ["nvidia","spacex","supply"],["nvidia","neocloud","supply"],
+  ["amd","azure","supply"],["amd","gcp","supply"],
+  ["tpu","gcp","supply"],
+  ["trainium","aws","supply"],
+  ["maia","azure","supply"],
+  ["mtia","meta","supply"],
+  ["cerebras","openai","supply"],
+  // clouds / landlords -> labs
+  ["gcp","gemini","supply"],["gcp","anthropic","both"],["gcp","meta","supply"],
+  ["aws","anthropic","both"],["aws","openai","supply"],
+  ["azure","openai","both"],
+  ["spacex","anthropic","supply"],["spacex","gcp","supply"],["spacex","xai","capital"],
+  ["neocloud","openai","supply"],
+  // capital ties
+  ["nvidia","openai","capital"],
+  // labs -> apps
+  ["gemini","gem_app","supply"],["gemini","gem_ent","supply"],
+  ["anthropic","claude_a","supply"],
+  ["openai","chatgpt","supply"],["openai","copilot","supply"],
+  ["meta","meta_ai","supply"],
+];
+
+// ---------- render layers/nodes ----------
+const map = document.getElementById("map");
+const svg = document.getElementById("edges");
+const nodeEl = {};
+
+LAYERS.forEach((L,i)=>{
+  const layer = document.createElement("div");
+  layer.className = "layer" + (L.power ? " power-band":"");
+  layer.dataset.accent = L.accent;
+  layer.style.animationDelay = (i*70)+"ms";
+  layer.innerHTML = `
+    <div class="rail">
+      <div class="num mono">${L.num}</div>
+      <div class="name">${L.name}</div>
+      <div class="role">${L.role}</div>
+      <div class="tick"></div>
+    </div>
+    <div class="nodes"></div>`;
+  const host = layer.querySelector(".nodes");
+  NODES.filter(n=>n.layer===L.id).forEach(n=>{
+    const el = document.createElement("div");
+    el.className="node"; el.dataset.id=n.id;
+    el.innerHTML = `${n.tag?`<span class="tag mono">${n.tag}</span>`:""}
+      <div class="lab">${n.lab}</div><div class="sub">${n.sub}</div>`;
+    el.addEventListener("click",e=>{e.stopPropagation();select(n.id);});
+    host.appendChild(el);
+    nodeEl[n.id]=el;
+  });
+  map.appendChild(layer);
+});
+
+// adjacency
+const adj = {}; NODES.forEach(n=>adj[n.id]={in:[],out:[]});
+EDGES.forEach(([f,t,ty])=>{adj[f].out.push([t,ty]);adj[t].in.push([f,ty]);});
+
+// svg markers
+svg.innerHTML = `<defs>
+  <marker id="aS" markerWidth="7" markerHeight="7" refX="5.5" refY="3" orient="auto">
+    <path d="M0,0 L6,3 L0,6 Z" fill="#46D6E6"/></marker>
+  <marker id="aC" markerWidth="7" markerHeight="7" refX="5.5" refY="3" orient="auto">
+    <path d="M0,0 L6,3 L0,6 Z" fill="#E89154"/></marker>
+</defs><g id="edgeLayer"></g>`;
+const edgeLayer = document.getElementById("edgeLayer");
+
+// ---------- selection / tracing ----------
+let current = null;
+
+function center(id){
+  const r = nodeEl[id].getBoundingClientRect();
+  const m = map.getBoundingClientRect();
+  return {x:r.left - m.left + r.width/2, y:r.top - m.top + r.height/2,
+          w:r.width, h:r.height};
+}
+
+function drawEdge(f,t,ty){
+  const a=center(f), b=center(t);
+  // anchor at vertical edges of cards for cleaner routing
+  const y1 = a.y + (b.y>a.y? a.h/2 : -a.h/2);
+  const y2 = b.y + (b.y>a.y? -b.h/2 : b.h/2);
+  const dy = (y2-y1);
+  const c = Math.max(28, Math.abs(dy)*0.45);
+  const path = `M ${a.x} ${y1} C ${a.x} ${y1+ (dy>=0?c:-c)}, ${b.x} ${y2-(dy>=0?c:-c)}, ${b.x} ${y2}`;
+  const mk = (ty==="capital") ? "aC" : "aS";
+  const stroke = (ty==="capital") ? "#E89154" : "#46D6E6";
+  const dash = (ty==="capital") ? '6 5' : (ty==="both" ? '0' : '0');
+  const p = document.createElementNS("http://www.w3.org/2000/svg","path");
+  p.setAttribute("d",path); p.setAttribute("fill","none");
+  p.setAttribute("stroke",stroke); p.setAttribute("stroke-width","1.6");
+  p.setAttribute("opacity","0.9"); p.setAttribute("marker-end",`url(#${mk})`);
+  if(dash!=='0') p.setAttribute("stroke-dasharray",dash);
+  edgeLayer.appendChild(p);
+  if(ty==="both"){ // overlay a copper dashed capital line
+    const p2=p.cloneNode(); p2.setAttribute("stroke","#E89154");
+    p2.setAttribute("stroke-dasharray","2 7"); p2.setAttribute("opacity","0.85");
+    p2.setAttribute("marker-end","url(#aC)");
+    edgeLayer.appendChild(p2);
+  }
+}
+
+function select(id){
+  current = id;
+  edgeLayer.innerHTML="";
+  if(!id){ map.classList.remove("has-selection");
+    Object.values(nodeEl).forEach(e=>e.classList.remove("lit","selected"));
+    closePanel(); return; }
+
+  map.classList.add("has-selection");
+  const lit = new Set([id]);
+  adj[id].in.forEach(([n])=>lit.add(n));
+  adj[id].out.forEach(([n])=>lit.add(n));
+  Object.entries(nodeEl).forEach(([k,e])=>{
+    e.classList.toggle("lit", lit.has(k) && k!==id);
+    e.classList.toggle("selected", k===id);
+  });
+  // draw edges touching node
+  adj[id].in.forEach(([n,ty])=>drawEdge(n,id,ty));
+  adj[id].out.forEach(([n,ty])=>drawEdge(id,n,ty));
+  openPanel(id);
+}
+
+// ---------- panel ----------
+const panel=document.getElementById("panel");
+const byId=id=>NODES.find(n=>n.id===id);
+const layerName=lid=>LAYERS.find(l=>l.id===lid);
+
+function chip(id,cap){
+  const n=byId(id);
+  return `<button class="chip${cap?' cap':''}" data-go="${id}">${n.lab}</button>`;
+}
+function openPanel(id){
+  const n=byId(id), L=layerName(n.layer);
+  document.getElementById("pLayer").textContent = `${L.num} · ${L.name}`;
+  document.getElementById("pName").textContent = n.lab;
+  document.getElementById("pDesc").textContent = n.desc;
+
+  const up = adj[id].in, down = adj[id].out;
+  const gUp=document.getElementById("gUp"), gDown=document.getElementById("gDown");
+  if(up.length){gUp.style.display="block";
+    document.getElementById("upChips").innerHTML =
+      up.map(([n2,ty])=>chip(n2, ty==="capital")).join("");}
+  else gUp.style.display="none";
+  if(down.length){gDown.style.display="block";
+    document.getElementById("downChips").innerHTML =
+      down.map(([n2,ty])=>chip(n2, ty==="capital")).join("");}
+  else gDown.style.display="none";
+
+  panel.querySelectorAll(".chip").forEach(c=>
+    c.addEventListener("click",()=>select(c.dataset.go)));
+  panel.classList.add("open");
+}
+function closePanel(){panel.classList.remove("open");}
+document.getElementById("panelClose").addEventListener("click",()=>{select(null);});
+
+// ---------- controls ----------
+document.querySelectorAll(".pick").forEach(b=>
+  b.addEventListener("click",()=>select(b.dataset.pick||null)));
+map.addEventListener("click",()=>select(null));
+
+// redraw edges on resize
+let rt;
+addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{if(current)select(current);},120);});
+// redraw once fonts settle
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(()=>{if(current)select(current);});}
+</script>
+</body>
+</html>
