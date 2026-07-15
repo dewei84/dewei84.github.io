@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Tour de France 2026 — Stage Schedule (SGT)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Archivo+Expanded:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F3EF;
+    --card:#FBFBF9;
+    --ink:#17181A;
+    --ink-soft:#565A5E;
+    --line:#DEDFD8;
+    --jaune:#FCD303;        /* maillot jaune */
+    --flat:#1F9E5A;         /* flat / sprint */
+    --hilly:#E08A1E;        /* hilly */
+    --mtn:#D6222E;          /* mountains */
+    --tt:#3B4CC0;           /* time trial */
+    --btn-bg:#17181A;       /* dark pills / active chips */
+    --btn-fg:#FBFBF9;
+    --shadow:0 1px 0 rgba(23,24,26,.04), 0 8px 24px -18px rgba(23,24,26,.45);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#141519;
+      --card:#1E2024;
+      --ink:#F2F3EF;
+      --ink-soft:#9CA0A6;
+      --line:#31343A;
+      --jaune:#FCD303;
+      --flat:#2FBF6E;
+      --hilly:#F0A030;
+      --mtn:#F0454F;
+      --tt:#6E7CE8;
+      --btn-bg:#F2F3EF;
+      --btn-fg:#17181A;
+      --shadow:0 1px 0 rgba(0,0,0,.2), 0 8px 24px -18px rgba(0,0,0,.8);
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Archivo",system-ui,sans-serif;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:0 18px 80px}
+
+  /* ---------- Header ---------- */
+  header{padding:44px 0 26px}
+  .eyebrow{
+    font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--ink-soft);display:flex;gap:10px;align-items:center;
+  }
+  .eyebrow::before{content:"";width:26px;height:4px;background:var(--jaune);display:inline-block}
+  h1{
+    font-family:"Archivo Expanded","Archivo",sans-serif;font-weight:800;
+    font-size:clamp(34px,7.5vw,64px);line-height:.96;letter-spacing:-.01em;
+    margin:14px 0 4px;text-transform:uppercase;
+  }
+  h1 .yr{
+    background:var(--jaune);color:#17181A;padding:0 .14em;
+    box-decoration-break:clone;-webkit-box-decoration-break:clone;
+  }
+  .route-line{
+    font-family:"Space Mono",monospace;font-size:15px;color:var(--ink);
+    margin-top:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .route-line b{font-weight:700}
+  .route-line .arw{color:var(--ink-soft)}
+  .stats{
+    display:flex;gap:26px;flex-wrap:wrap;margin-top:22px;
+    padding-top:20px;border-top:1px solid var(--line);
+  }
+  .stat .n{font-family:"Archivo Expanded",sans-serif;font-weight:700;font-size:26px;line-height:1}
+  .stat .l{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-soft);margin-top:5px}
+
+  /* ---------- Filters ---------- */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 6px;position:sticky;top:0;
+    background:var(--paper);padding:12px 0;z-index:20}
+  .chip{
+    font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+    border:1.5px solid var(--line);background:var(--card);color:var(--ink);
+    padding:8px 13px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:7px;
+    transition:border-color .15s,background .15s,color .15s;
+  }
+  .chip:hover{border-color:var(--ink)}
+  .chip .dot{width:9px;height:9px;border-radius:2px;display:inline-block}
+  .chip[aria-pressed="true"]{background:var(--btn-bg);color:var(--btn-fg);border-color:var(--btn-bg)}
+  .chip:focus-visible{outline:3px solid var(--jaune);outline-offset:2px}
+
+  /* ---------- Stage list ---------- */
+  .list{position:relative;margin-top:6px}
+  /* the continuous race line */
+  .list::before{
+    content:"";position:absolute;left:47px;top:14px;bottom:36px;width:3px;
+    background:repeating-linear-gradient(to bottom,var(--jaune) 0 14px,transparent 14px 24px);
+    z-index:0;
+  }
+  @media(max-width:560px){ .list::before{left:31px} }
+
+  .stage{position:relative;z-index:1;margin:0 0 10px;border-radius:14px;
+    transition:box-shadow .18s ease,transform .06s}
+  .stage:hover{box-shadow:0 10px 26px -12px rgba(0,0,0,.45),
+    0 0 0 1.5px color-mix(in srgb, var(--ink) 60%, transparent)}
+  .stage-btn{
+    width:100%;text-align:left;cursor:pointer;background:var(--card);
+    border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+    padding:14px 16px 14px 14px;display:grid;
+    grid-template-columns:66px 1fr auto;gap:14px;align-items:center;
+    transition:border-color .15s,transform .06s;font-family:inherit;
+  }
+  .stage-btn:active{transform:translateY(1px)}
+  .stage-btn:focus-visible{outline:3px solid var(--jaune);outline-offset:2px}
+
+  .snum{
+    width:66px;display:flex;flex-direction:column;align-items:center;gap:5px;
+  }
+  .snum .pill{
+    font-family:"Space Mono",monospace;font-weight:700;font-size:12px;
+    background:var(--btn-bg);color:var(--btn-fg);border-radius:7px;padding:3px 0;width:44px;text-align:center;
+    letter-spacing:.03em;
+  }
+  .snum.tt .pill{background:var(--tt)}
+  .snum .terr-dot{width:11px;height:11px;border-radius:3px}
+
+  .smid{min-width:0}
+  .sroute{
+    font-family:"Archivo",sans-serif;font-weight:700;font-size:16.5px;letter-spacing:-.01em;
+    line-height:1.15;display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;
+  }
+  .sroute .to{color:var(--ink-soft);font-weight:500;font-size:14px}
+  .smeta{
+    font-family:"Space Mono",monospace;font-size:13.5px;color:var(--ink-soft);
+    margin-top:6px;display:flex;gap:14px;flex-wrap:wrap;
+  }
+  .smeta .badge{
+    color:#fff;padding:2px 8px;border-radius:5px;font-size:12px;letter-spacing:.04em;
+    text-transform:uppercase;font-weight:700;
+  }
+  .smeta .k{color:var(--ink)}
+
+  .sprof{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+  .sprof svg{display:block}
+  .chev{color:var(--ink-soft);font-size:22px;line-height:1;font-family:"Archivo",sans-serif;
+    font-weight:700;transition:transform .2s;display:inline-block}
+  .stage-btn:hover .chev{color:var(--ink)}
+  .stage.open .chev{transform:rotate(90deg)}
+
+  @media(max-width:560px){
+    .stage-btn{grid-template-columns:50px 1fr;padding-left:12px}
+    .snum{width:50px}
+    .snum .pill{width:40px}
+    .sprof{grid-column:1 / -1;flex-direction:row;justify-content:space-between;
+      align-items:center;border-top:1px dashed var(--line);padding-top:10px;margin-top:2px}
+  }
+
+  /* ---------- Detail drawer ---------- */
+  .detail{
+    overflow:hidden;max-height:0;transition:max-height .28s ease;
+    background:var(--card);border:0 solid var(--line);
+    border-radius:0 0 14px 14px;
+  }
+  .stage.open .detail{max-height:480px;border-width:0 1px 1px 1px}
+  .stage.open .stage-btn{border-radius:14px 14px 0 0;border-bottom-color:transparent}
+  .detail-in{padding:6px 18px 20px 18px}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:14px}
+  .cell{background:var(--card);padding:13px 15px}
+  .cell .lab{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  .cell .val{font-family:"Archivo",sans-serif;font-weight:700;font-size:20px;margin-top:5px}
+  .cell .val small{font-weight:400;color:var(--ink-soft);font-size:13.5px;
+    font-family:"Space Mono",monospace}
+  @media(max-width:560px){.grid{grid-template-columns:repeat(2,1fr)}}
+  .note{font-size:15px;color:var(--ink-soft);line-height:1.55}
+  .note b{color:var(--ink);font-weight:600}
+
+  /* ---------- Rest day ---------- */
+  .rest{position:relative;z-index:1;margin:2px 0 12px;padding-left:66px}
+  @media(max-width:560px){.rest{padding-left:50px}}
+  .rest span{
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-soft);border:1px dashed var(--line);border-radius:8px;
+    padding:6px 12px;display:inline-block;background:var(--paper);
+  }
+
+  footer{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);
+    font-family:"Space Mono",monospace;font-size:11.5px;color:var(--ink-soft);line-height:1.7}
+  footer a{color:var(--ink)}
+  .empty{display:none;text-align:center;padding:40px;color:var(--ink-soft);
+    font-family:"Space Mono",monospace;font-size:13px}
+
+  @media(prefers-reduced-motion:reduce){
+    *{transition:none !important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">113th Edition · 4–26 July 2026 · Times in Singapore (GMT+8)</div>
+    <h1>Tour de France <span class="yr">2026</span></h1>
+    <div class="route-line">
+      <b>Barcelona</b><span class="arw">— 3 weeks —</span><b>Paris</b>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="n">21</div><div class="l">Stages</div></div>
+      <div class="stat"><div class="n">3,290<span style="font-size:14px"> km</span></div><div class="l">Total distance</div></div>
+      <div class="stat"><div class="n">8</div><div class="l">Mountain stages</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">Time trials</div></div>
+      <div class="stat"><div class="n">2</div><div class="l">Rest days</div></div>
+    </div>
+  </header>
+
+  <div class="filters" id="filters">
+    <button class="chip" data-f="all" aria-pressed="true">All 21</button>
+    <button class="chip" data-f="flat" aria-pressed="false"><span class="dot" style="background:var(--flat)"></span>Flat</button>
+    <button class="chip" data-f="hilly" aria-pressed="false"><span class="dot" style="background:var(--hilly)"></span>Hilly</button>
+    <button class="chip" data-f="mountains" aria-pressed="false"><span class="dot" style="background:var(--mtn)"></span>Mountains</button>
+    <button class="chip" data-f="tt" aria-pressed="false"><span class="dot" style="background:var(--tt)"></span>Time trial</button>
+  </div>
+
+  <div class="list" id="list"></div>
+  <div class="empty" id="empty">No stages match that terrain.</div>
+
+  <footer>
+    Distances &amp; profiles: ProCyclingStats / ASO official 2026 route. Terrain classed by total climbing and finish type.<br>
+    Start times are the official neutral roll-out (départ fictif) per ASO's 2026 pattern, converted from CEST (GMT+2) to Singapore time (GMT+8, +6h): flat/hilly road stages 19:05, mountain stages 18:15, Stage 1 team time trial 23:05, Stage 16 individual time trial first rider 18:30, Paris finale 22:30. Exact times can shift slightly per stage — check letour.fr on the day.
+  </footer>
+</div>
+
+<script>
+const F='flat',H='hilly',M='mountains',TT='tt';
+const stages=[
+ {n:1, type:'TTT', terr:TT, date:'Sat 4 Jul', from:'Barcelona', to:'Barcelona', km:19.6, vm:167, sgt:'23:05', label:'Team time trial',
+  note:'Grand Départ. A <b>team time trial</b> through central Barcelona finishing with two short ramps up Montjuïc. First TTT to open the Tour since 1971 — every rider gets an individual finish time.'},
+ {n:2, type:'Road', terr:H, date:'Sun 5 Jul', from:'Tarragona', to:'Barcelona', km:168.5, vm:2049, sgt:'19:05', label:'Hilly',
+  note:'Three ascents of the Montjuïc climb decide it — a day for the puncheurs, and the first real KOM and green-jersey skirmishing.'},
+ {n:3, type:'Road', terr:M, date:'Mon 6 Jul', from:'Granollers', to:'Les Angles', km:195.9, vm:3940, sgt:'18:15', label:'Mountains',
+  note:'The race crosses from Spain into France over the Port de la Bonaigua (2,072 m) and finishes at the Les Angles ski station — the first mountain-top finish of the Tour.'},
+ {n:4, type:'Road', terr:H, date:'Tue 7 Jul', from:'Carcassonne', to:'Foix', km:181.9, vm:2784, sgt:'19:05', label:'Hilly',
+  note:'A rolling Pyrenean-foothills stage tailor-made for a breakaway.'},
+ {n:5, type:'Road', terr:F, date:'Wed 8 Jul', from:'Lannemezan', to:'Pau', km:158.3, vm:1395, sgt:'19:05', label:'Flat',
+  note:'A rare flat day in the mountains — the sprinters get their first clear chance in Pau.'},
+ {n:6, type:'Road', terr:M, date:'Thu 9 Jul', from:'Pau', to:'Gavarnie-Gèdre', km:186.2, vm:4149, sgt:'18:15', label:'Mountains',
+  note:'The first-week centrepiece: Col d\u2019Aspin and Col du Tourmalet before the first-ever summit finish at the Cirque de Gavarnie.'},
+ {n:7, type:'Road', terr:F, date:'Fri 10 Jul', from:'Hagetmau', to:'Bordeaux', km:175.1, vm:701, sgt:'19:05', label:'Flat',
+  note:'A flat run through the Landes forests to Bordeaux — a classic bunch-sprint finish.'},
+ {n:8, type:'Road', terr:F, date:'Sat 11 Jul', from:'Périgueux', to:'Bergerac', km:180.4, vm:1353, sgt:'19:05', label:'Flat',
+  note:'Back-to-back sprint chances through the Dordogne, with a fast run-in to Bergerac.'},
+ {n:9, type:'Road', terr:H, date:'Sun 12 Jul', from:'Malemort', to:'Ussel', km:154.6, vm:2792, sgt:'19:05', label:'Hilly',
+  note:'A lumpy transitional stage into the Massif Central before the first rest day.'},
+ {rest:'Rest day · Monday 13 July'},
+ {n:10, type:'Road', terr:M, date:'Tue 14 Jul', from:'Aurillac', to:'Le Lioran', km:166.6, vm:3791, sgt:'18:15', label:'Mountains',
+  note:'<b>Bastille Day.</b> Seven categorised climbs across the Massif Central with a summit finish at Le Lioran — the French will want a home win.'},
+ {n:11, type:'Road', terr:F, date:'Wed 15 Jul', from:'Vichy', to:'Nevers', km:161.3, vm:1107, sgt:'19:05', label:'Flat',
+  note:'A gentle stage back for the sprinters after the Massif Central.'},
+ {n:12, type:'Road', terr:F, date:'Thu 16 Jul', from:'Nevers Magny-Cours', to:'Chalon-sur-Saône', km:179.1, vm:1412, sgt:'19:05', label:'Flat',
+  note:'Starts on the former F1 circuit at Magny-Cours. A late côte 20 km out could tempt the puncheurs, but a sprint looks likely.'},
+ {n:13, type:'Road', terr:H, date:'Fri 17 Jul', from:'Dole', to:'Belfort', km:205.8, vm:2309, sgt:'19:05', label:'Hilly',
+  note:'The <b>longest stage</b> of the Tour and the only one over 200 km, closing over the Ballon d\u2019Alsace and its long descent — one for the breakaway.'},
+ {n:14, type:'Road', terr:M, date:'Sat 18 Jul', from:'Mulhouse', to:'Le Markstein', km:155.3, vm:3941, sgt:'18:15', label:'Mountains',
+  note:'Seven climbs through the Vosges, finishing at Le Markstein just after the last summit — a brutal 9%+ final kilometre.'},
+ {n:15, type:'Road', terr:M, date:'Sun 19 Jul', from:'Champagnole', to:'Plateau de Solaison', km:183.9, vm:4098, sgt:'18:15', label:'Mountains',
+  note:'A first-ever Tour finish on the Plateau de Solaison — 11.3 km at 9.2% to close week two.'},
+ {rest:'Rest day · Monday 20 July'},
+ {n:16, type:'ITT', terr:TT, date:'Tue 21 Jul', from:'Évian-les-Bains', to:'Thonon-les-Bains', km:26.1, vm:470, sgt:'18:30', label:'Time trial',
+  note:'The Tour\u2019s only <b>individual time trial</b>, along the shore of Lake Geneva. Not pancake-flat — it climbs to the Côte de Larringes early before a flat run-in.'},
+ {n:17, type:'Road', terr:H, date:'Wed 22 Jul', from:'Chambéry', to:'Voiron', km:174.7, vm:2362, sgt:'19:05', label:'Hilly',
+  note:'Over 2,000 m of climbing but likely the sprinters\u2019 last dance, with the Col des Prés and Col de Couz early and a shallow ramp before Voiron.'},
+ {n:18, type:'Road', terr:M, date:'Thu 23 Jul', from:'Voiron', to:'Orcières-Merlette', km:185.2, vm:3944, sgt:'18:15', label:'Mountains',
+  note:'Into the Alps with a summit finish at Orcières-Merlette — a climb steeped in Tour history.'},
+ {n:19, type:'Road', terr:M, date:'Fri 24 Jul', from:'Gap', to:'Alpe d\u2019Huez', km:127.9, vm:3572, sgt:'18:15', label:'Mountains',
+  note:'Short, punchy, and explosive — the first of back-to-back Alpe d\u2019Huez finishes via the traditional 21 hairpins.'},
+ {n:20, type:'Road', terr:M, date:'Sat 25 Jul', from:'Le Bourg-d\u2019Oisans', to:'Alpe d\u2019Huez', km:170.9, vm:5624, sgt:'18:15', label:'Mountains',
+  note:'The <b>queen stage.</b> Croix de Fer, Télégraphe, Galibier (2,642 m — the Tour\u2019s roof) and Col de Sarenne before a second summit at Alpe d\u2019Huez. 5,600 m of climbing.'},
+ {n:21, type:'Road', terr:F, date:'Sun 26 Jul', from:'Thoiry', to:'Paris', km:133, vm:1295, sgt:'22:30', label:'Flat',
+  note:'The finale to the Champs-Élysées, with three ascents of the Montmartre climb from the 2024 Olympics before the run to the line.'},
+];
+
+const TERR={
+ [F]:{c:'var(--flat)', name:'Flat'},
+ [H]:{c:'var(--hilly)', name:'Hilly'},
+ [M]:{c:'var(--mtn)', name:'Mountains'},
+ [TT]:{c:'var(--tt)', name:'Time trial'},
+};
+
+// deterministic elevation silhouette from terrain + climbing
+function profile(s){
+  const w=86,h=30,n=26;
+  let seed=s.n*97+s.vm;
+  const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280;};
+  const amp = s.terr===M?1 : s.terr===H?0.55 : s.terr===TT?0.22 : 0.2;
+  const climbFinish = (s.terr===M)|| (s.n===3||s.n===6||s.n===10||s.n===14||s.n===15||s.n===18||s.n===19||s.n===20);
+  let pts=[];
+  for(let i=0;i<n;i++){
+    const t=i/(n-1);
+    let base = amp*(0.35 + 0.65*Math.pow(t, climbFinish?1.7:1));
+    let jag = amp*(rnd()-0.5)* (s.terr===F?0.4:1.1);
+    let v = Math.max(0.02, Math.min(1, base + jag*0.5 + (s.terr===F?0.06:0)));
+    if(climbFinish && i>n-4) v = Math.max(v, 0.82 + 0.06*(i-(n-4)));
+    pts.push([t*w, h-(v*(h-3))-1.5]);
+  }
+  const c=TERR[s.terr].c;
+  let d='M0,'+h+' L'+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L')+' L'+w+','+h+' Z';
+  let line='M'+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L');
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true">
+    <path d="${d}" fill="${c}" fill-opacity="0.13"/>
+    <path d="${line}" fill="none" stroke="${c}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg>`;
+}
+
+const list=document.getElementById('list');
+function render(filter){
+  list.innerHTML='';
+  let shown=0;
+  stages.forEach((s,idx)=>{
+    if(s.rest){
+      if(filter!=='all') return;
+      const r=document.createElement('div');
+      r.className='rest';
+      r.innerHTML=`<span>◦ ${s.rest}</span>`;
+      list.appendChild(r);
+      return;
+    }
+    if(filter!=='all' && s.terr!==filter) return;
+    shown++;
+    const t=TERR[s.terr];
+    const el=document.createElement('div');
+    el.className='stage';
+    el.innerHTML=`
+      <button class="stage-btn" aria-expanded="false">
+        <span class="snum ${s.type==='TTT'||s.type==='ITT'?'tt':''}">
+          <span class="pill">${s.type==='Road'?'S'+s.n:s.type}</span>
+          <span class="terr-dot" style="background:${t.c}"></span>
+        </span>
+        <span class="smid">
+          <span class="sroute">${s.from}<span class="to">→ ${s.to}</span></span>
+          <span class="smeta">
+            <span class="badge" style="background:${t.c}">${s.label}</span>
+            <span class="k">${s.km} km</span>
+            <span>${s.date}</span>
+            <span>◷ ${s.sgt} SGT</span>
+          </span>
+        </span>
+        <span class="sprof">
+          ${profile(s)}
+          <span class="chev" aria-hidden="true">›</span>
+        </span>
+      </button>
+      <div class="detail" role="region">
+        <div class="detail-in">
+          <div class="grid">
+            <div class="cell"><div class="lab">Start date</div><div class="val">${s.date.split(' ').slice(1).join(' ')} <small>2026</small></div></div>
+            <div class="cell"><div class="lab">Start time</div><div class="val">${s.sgt} <small>SGT</small></div></div>
+            <div class="cell"><div class="lab">Distance</div><div class="val">${s.km} <small>km</small></div></div>
+            <div class="cell"><div class="lab">Terrain</div><div class="val" style="color:${t.c}">${t.name}</div></div>
+          </div>
+          <div class="note"><b>Stage ${s.n}${s.type!=='Road'?' · '+ (s.type==='TTT'?'Team Time Trial':'Individual Time Trial'):''}:</b> ${s.note} <br><span style="font-family:'Space Mono',monospace;font-size:13px;color:var(--ink-soft)">Total climbing ≈ ${s.vm.toLocaleString()} m</span></div>
+        </div>
+      </div>`;
+    const btn=el.querySelector('.stage-btn');
+    btn.addEventListener('click',()=>{
+      const open=el.classList.toggle('open');
+      btn.setAttribute('aria-expanded',open?'true':'false');
+    });
+    list.appendChild(el);
+  });
+  document.getElementById('empty').style.display=shown?'none':'block';
+}
+
+const chips=[...document.querySelectorAll('.chip')];
+chips.forEach(c=>c.addEventListener('click',()=>{
+  chips.forEach(x=>x.setAttribute('aria-pressed','false'));
+  c.setAttribute('aria-pressed','true');
+  render(c.dataset.f);
+}));
+render('all');
+</script>
+</body>
+</html>
