@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light dark">
-<title>Tour de France 2026 — Stage Schedule (SGT)</title>
+<title>Tour de France 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Archivo+Expanded:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -94,6 +94,11 @@
   .chip .dot{width:9px;height:9px;border-radius:2px;display:inline-block}
   .chip[aria-pressed="true"]{background:var(--btn-bg);color:var(--btn-fg);border-color:var(--btn-bg)}
   .chip:focus-visible{outline:3px solid var(--jaune);outline-offset:2px}
+  .today-btn{margin-left:auto;font-weight:700;color:var(--ink);
+    border-color:var(--jaune);background:color-mix(in srgb,var(--jaune) 20%, var(--card))}
+  .today-btn:hover{border-color:var(--jaune);background:color-mix(in srgb,var(--jaune) 34%, var(--card))}
+  .today-btn .dot{background:var(--jaune);border-radius:999px}
+  @media(max-width:560px){.today-btn{margin-left:0}}
 
   /* ---------- Stage list ---------- */
   .list{position:relative;margin-top:6px}
@@ -145,6 +150,53 @@
     text-transform:uppercase;font-weight:700;
   }
   .smeta .k{color:var(--ink)}
+  .won{
+    font-family:"Space Mono",monospace;font-weight:700;font-size:12.5px;
+    display:inline-flex;align-items:baseline;gap:5px;
+    background:color-mix(in srgb, var(--jaune) 34%, transparent);
+    color:var(--ink);padding:2px 9px;border-radius:5px;
+  }
+  .swin{display:flex;margin-top:8px}
+  .won .wonteam{font-weight:500;opacity:.72}
+  .todaytag{font-family:"Space Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;background:var(--jaune);color:#17181A;padding:1px 8px;border-radius:999px;
+    align-self:center}
+  .stage.is-today{box-shadow:0 0 0 1.5px var(--jaune)}
+  .stage.is-today > .stage-btn{border-color:var(--jaune)}
+  .stage.is-today:hover{box-shadow:0 0 0 1.5px var(--jaune),0 10px 26px -12px rgba(0,0,0,.45)}
+  @keyframes flashRing{0%{box-shadow:0 0 0 3px var(--jaune)}
+    100%{box-shadow:0 0 0 1.5px var(--jaune)}}
+  .stage.is-today.flash{animation:flashRing 1.5s ease-out}
+
+  /* ---------- Podium (top 3) ---------- */
+  .subhead{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink-soft);margin:2px 0 8px}
+  .podium{display:flex;flex-direction:column;gap:6px;margin:0 0 16px}
+  .pcard{display:flex;align-items:center;gap:12px;border:1px solid var(--line);
+    border-radius:10px;padding:9px 14px;background:var(--card)}
+  .pcard.p1{border-left:4px solid var(--jaune)}
+  .pcard.p2{border-left:4px solid var(--ink-soft)}
+  .pcard.p3{border-left:4px solid color-mix(in srgb, var(--ink-soft) 55%, transparent)}
+  .prank{font-family:"Space Mono",monospace;font-weight:700;font-size:14px;
+    width:16px;text-align:center;color:var(--ink-soft);flex:none}
+  .pcard.p1 .prank{color:var(--ink)}
+  .pinfo{flex:1;min-width:0}
+  .pname{font-family:"Archivo",sans-serif;font-weight:700;font-size:15.5px;line-height:1.2}
+  .pteam{font-family:"Space Mono",monospace;font-size:12px;color:var(--ink-soft);margin-top:2px}
+  .pgap{font-family:"Space Mono",monospace;font-size:12px;color:var(--ink-soft);flex:none}
+
+  /* ---------- Jersey wearers ---------- */
+  .jerseys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
+  @media(max-width:560px){.jerseys{grid-template-columns:repeat(2,1fr)}}
+  .jcard{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--card)}
+  .jcard.yellow{border-left:4px solid var(--jaune)}
+  .jcard.green{border-left:4px solid var(--flat)}
+  .jcard.polka{border-left:4px solid var(--mtn)}
+  .jcard.white{border-left:4px solid var(--ink-soft)}
+  .jlab{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  .jname{font-family:"Archivo",sans-serif;font-weight:700;font-size:14.5px;margin-top:4px;line-height:1.2}
+  .jteam{font-family:"Space Mono",monospace;font-size:11.5px;color:var(--ink-soft);margin-top:2px}
 
   .sprof{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
   .sprof svg{display:block}
@@ -167,7 +219,7 @@
     background:var(--card);border:0 solid var(--line);
     border-radius:0 0 14px 14px;
   }
-  .stage.open .detail{max-height:480px;border-width:0 1px 1px 1px}
+  .stage.open .detail{max-height:1200px;border-width:0 1px 1px 1px}
   .stage.open .stage-btn{border-radius:14px 14px 0 0;border-bottom-color:transparent}
   .detail-in{padding:6px 18px 20px 18px}
   .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
@@ -225,6 +277,7 @@
     <button class="chip" data-f="hilly" aria-pressed="false"><span class="dot" style="background:var(--hilly)"></span>Hilly</button>
     <button class="chip" data-f="mountains" aria-pressed="false"><span class="dot" style="background:var(--mtn)"></span>Mountains</button>
     <button class="chip" data-f="tt" aria-pressed="false"><span class="dot" style="background:var(--tt)"></span>Time trial</button>
+    <button class="chip today-btn" id="todayBtn" type="button"><span class="dot"></span>Today's stage</button>
   </div>
 
   <div class="list" id="list"></div>
@@ -232,6 +285,7 @@
 
   <footer>
     Distances &amp; profiles: ProCyclingStats / ASO official 2026 route. Terrain classed by total climbing and finish type.<br>
+    Results — stage podium (top 3 + teams) and the four classification leaders (yellow / green / polka-dot / white) — shown for completed stages through Stage 11 · 15 Jul 2026. Sources: Wikipedia (2026 Tour de France), ProCyclingStats &amp; Cyclingnews. Stage 1 was a team time trial, so it has no individual winner — the podium lists teams and their times (Jonas Vingegaard took the first yellow jersey as Visma's best-placed rider).<br>
     Start times are the official neutral roll-out (départ fictif) per ASO's 2026 pattern, converted from CEST (GMT+2) to Singapore time (GMT+8, +6h): flat/hilly road stages 19:05, mountain stages 18:15, Stage 1 team time trial 23:05, Stage 16 individual time trial first rider 18:30, Paris finale 22:30. Exact times can shift slightly per stage — check letour.fr on the day.
   </footer>
 </div>
@@ -285,6 +339,39 @@ const stages=[
   note:'The finale to the Champs-Élysées, with three ascents of the Montmartre climb from the 2024 Olympics before the run to the line.'},
 ];
 
+// Race results for completed stages (sources: Wikipedia 2026 Tour de France, ProCyclingStats, Cyclingnews).
+// win = stage winner shown on the collapsed card (defaults to top3[0]). top3 = stage podium with gap to winner.
+// jerseys = classification leaders (with team) after the stage. gap '' hides the gap; 's.t.' = same time.
+const UAE='UAE Team Emirates-XRG', VIS='Team Visma | Lease a Bike', SQS='Soudal Quick-Step',
+  TRK='Lidl-Trek', ALP='Alpecin-Premier Tech', INE='Ineos Grenadiers', UNO='Uno-X Mobility',
+  EFE='EF Education-EasyPost', DEC='Decathlon CMA CGM', AST='XDS Astana Team',
+  LIN='Lotto–Intermarché', Q36='Q36.5 Pro Cycling', MOV='Movistar Team', CAJ='Caja Rural-Seguros RGA';
+const results={
+ 1:{tt:true,
+  top3:[{name:'Team Visma | Lease a Bike', team:'', gap:'0:00'},{name:'Netcompany Ineos cycling team', team:'', gap:'+0:07'},{name:'UAE Team Emirates XRG', team:'', gap:'+0:11'}],
+  jerseys:{yellow:{name:'Jonas Vingegaard',team:VIS}, green:{name:'Egan Bernal',team:INE}, polka:{name:'Tadej Pogačar',team:UAE}, white:{name:'Juan Ayuso',team:TRK}}},
+ 2:{top3:[{name:'Isaac del Toro', team:UAE, gap:'0:00'},{name:'Tadej Pogačar', team:UAE, gap:'s.t.'},{name:'Remco Evenepoel', team:SQS, gap:'s.t.'}],
+  jerseys:{yellow:{name:'Isaac del Toro',team:UAE}, green:{name:'Isaac del Toro',team:UAE}, polka:{name:'Alex Molenaar',team:CAJ}, white:{name:'Isaac del Toro',team:UAE}}},
+ 3:{top3:[{name:'Tadej Pogačar', team:UAE, gap:'0:00'},{name:'Jonas Vingegaard', team:VIS, gap:'+0:02'},{name:'Richard Carapaz', team:EFE, gap:''}],
+  jerseys:{yellow:{name:'Tadej Pogačar',team:UAE}, green:{name:'Tadej Pogačar',team:UAE}, polka:{name:'Tadej Pogačar',team:UAE}, white:{name:'Alex Baudin',team:EFE}}},
+ 4:{top3:[{name:'Mads Pedersen', team:TRK, gap:'0:00'},{name:'Quinn Simmons', team:TRK, gap:'s.t.'},{name:'Raúl García Pierna', team:MOV, gap:'s.t.'}],
+  jerseys:{yellow:{name:'Torstein Træen',team:UNO}, green:{name:'Mads Pedersen',team:TRK}, polka:{name:'Mads Pedersen',team:TRK}, white:{name:'Mathias Vacek',team:TRK}}},
+ 5:{top3:[{name:'Olav Kooij', team:DEC, gap:'0:00'},{name:'Max Kanter', team:AST, gap:'s.t.'},{name:'Tim Merlier', team:SQS, gap:'s.t.'}],
+  jerseys:{yellow:{name:'Torstein Træen',team:UNO}, green:{name:'Mads Pedersen',team:TRK}, polka:{name:'Alex Baudin',team:EFE}, white:{name:'Mathias Vacek',team:TRK}}},
+ 6:{top3:[{name:'Tadej Pogačar', team:UAE, gap:'0:00'},{name:'Jonas Vingegaard', team:VIS, gap:'+2:38'},{name:'Isaac del Toro', team:UAE, gap:'+2:57'}],
+  jerseys:{yellow:{name:'Tadej Pogačar',team:UAE}, green:{name:'Tadej Pogačar',team:UAE}, polka:{name:'Tadej Pogačar',team:UAE}, white:{name:'Isaac del Toro',team:UAE}}},
+ 7:{top3:[{name:'Tim Merlier', team:SQS, gap:'0:00'},{name:'Søren Wærenskjold', team:UNO, gap:'s.t.'},{name:'Biniam Girmay', team:LIN, gap:'s.t.'}],
+  jerseys:{yellow:{name:'Tadej Pogačar',team:UAE}, green:{name:'Mads Pedersen',team:TRK}, polka:{name:'Tadej Pogačar',team:UAE}, white:{name:'Isaac del Toro',team:UAE}}},
+ 8:{top3:[{name:'Tim Merlier', team:SQS, gap:'0:00'},{name:'Biniam Girmay', team:LIN, gap:'s.t.'},{name:'Olav Kooij', team:DEC, gap:'s.t.'}],
+  jerseys:{yellow:{name:'Tadej Pogačar',team:UAE}, green:{name:'Mads Pedersen',team:TRK}, polka:{name:'Tadej Pogačar',team:UAE}, white:{name:'Isaac del Toro',team:UAE}}},
+ 9:{top3:[{name:'Mathieu van der Poel', team:ALP, gap:'0:00'},{name:'Tobias Halland Johannessen', team:UNO, gap:'s.t.'},{name:'Tom Pidcock', team:Q36, gap:'s.t.'}],
+  jerseys:{yellow:{name:'Tadej Pogačar',team:UAE}, green:{name:'Mathieu van der Poel',team:ALP}, polka:{name:'Tadej Pogačar',team:UAE}, white:{name:'Isaac del Toro',team:UAE}}},
+ 10:{top3:[{name:'Tadej Pogačar', team:UAE, gap:'0:00'},{name:'Remco Evenepoel', team:SQS, gap:'+0:32'},{name:'Paul Seixas', team:DEC, gap:'+0:34'}],
+  jerseys:{yellow:{name:'Tadej Pogačar',team:UAE}, green:{name:'Mads Pedersen',team:TRK}, polka:{name:'Juan Ayuso',team:TRK}, white:{name:'Isaac del Toro',team:UAE}}},
+ 11:{top3:[{name:'Søren Wærenskjold', team:UNO, gap:'0:00'},{name:'Olav Kooij', team:DEC, gap:'s.t.'},{name:'Jasper Philipsen', team:ALP, gap:'s.t.'}],
+  jerseys:{yellow:{name:'Tadej Pogačar',team:UAE}, green:{name:'Mads Pedersen',team:TRK}, polka:{name:'Juan Ayuso',team:TRK}, white:{name:'Juan Ayuso',team:TRK}}},
+};
+
 const TERR={
  [F]:{c:'var(--flat)', name:'Flat'},
  [H]:{c:'var(--hilly)', name:'Hilly'},
@@ -317,6 +404,24 @@ function profile(s){
   </svg>`;
 }
 
+// Which stage is "today"? Parsed from the viewer's real date so it stays correct across the race.
+const MON={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+function stageDate(s){const p=s.date.split(' ');return new Date(2026,MON[p[2]],+p[1]);}
+function computeTodayStage(){
+  const now=new Date();
+  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+  let exact=null, prev=null, first=null;
+  stages.forEach(s=>{
+    if(s.rest) return;
+    if(first===null) first=s.n;
+    const d=stageDate(s).getTime();
+    if(d===today) exact=s.n;
+    if(d<=today) prev=s.n;      // most recent stage on/before today (covers rest days & post-race)
+  });
+  return exact ?? prev ?? first; // before the race → first stage
+}
+const TODAY_N=computeTodayStage();
+
 const list=document.getElementById('list');
 function render(filter){
   list.innerHTML='';
@@ -334,7 +439,37 @@ function render(filter){
     shown++;
     const t=TERR[s.terr];
     const el=document.createElement('div');
-    el.className='stage';
+    el.className='stage'+(s.n===TODAY_N?' is-today':'');
+    el.dataset.n=s.n;
+    const r=results[s.n];
+    const win = r ? (r.win || r.top3[0]) : null;
+    const wonChip = win ? `<span class="won">🏆 ${win.name}${win.team?` <span class="wonteam">· ${win.team}</span>`:''}</span>` : '';
+    const podium = r ? `
+          <div class="subhead">Stage result${r.tt?' · team time trial, team times' : ''}</div>
+          <div class="podium">
+            ${r.top3.map((p,i)=>`
+            <div class="pcard p${i+1}">
+              <span class="prank">${i+1}</span>
+              <span class="pinfo"><span class="pname">${p.name}</span>${p.team?`<span class="pteam">${p.team}</span>`:''}</span>
+              ${p.gap?`<span class="pgap">${p.gap}</span>`:''}
+            </div>`).join('')}
+          </div>` : '';
+    const jerseyDefs = r ? [
+      ['yellow','Yellow jersey · GC leader', r.jerseys.yellow],
+      ['green','Green jersey · points', r.jerseys.green],
+      ['polka','Polka dot jersey · KOM', r.jerseys.polka],
+      ['white','White jersey · best young rider', r.jerseys.white],
+    ] : [];
+    const jerseyBlock = r ? `
+          <div class="subhead">Jersey wearers after this stage</div>
+          <div class="jerseys">
+            ${jerseyDefs.map(([cls,lab,j])=>`
+            <div class="jcard ${cls}">
+              <div class="jlab">${lab}</div>
+              <div class="jname">${j?j.name:'—'}</div>
+              <div class="jteam">${j?j.team:'Not yet awarded'}</div>
+            </div>`).join('')}
+          </div>` : '';
     el.innerHTML=`
       <button class="stage-btn" aria-expanded="false">
         <span class="snum ${s.type==='TTT'||s.type==='ITT'?'tt':''}">
@@ -342,13 +477,14 @@ function render(filter){
           <span class="terr-dot" style="background:${t.c}"></span>
         </span>
         <span class="smid">
-          <span class="sroute">${s.from}<span class="to">→ ${s.to}</span></span>
+          <span class="sroute">${s.from}<span class="to">→ ${s.to}</span>${s.n===TODAY_N?'<span class="todaytag">Today</span>':''}</span>
           <span class="smeta">
             <span class="badge" style="background:${t.c}">${s.label}</span>
             <span class="k">${s.km} km</span>
             <span>${s.date}</span>
             <span>◷ ${s.sgt} SGT</span>
           </span>
+          ${wonChip?`<span class="swin">${wonChip}</span>`:''}
         </span>
         <span class="sprof">
           ${profile(s)}
@@ -363,6 +499,8 @@ function render(filter){
             <div class="cell"><div class="lab">Distance</div><div class="val">${s.km} <small>km</small></div></div>
             <div class="cell"><div class="lab">Terrain</div><div class="val" style="color:${t.c}">${t.name}</div></div>
           </div>
+          ${podium}
+          ${jerseyBlock}
           <div class="note"><b>Stage ${s.n}${s.type!=='Road'?' · '+ (s.type==='TTT'?'Team Time Trial':'Individual Time Trial'):''}:</b> ${s.note} <br><span style="font-family:'Space Mono',monospace;font-size:13px;color:var(--ink-soft)">Total climbing ≈ ${s.vm.toLocaleString()} m</span></div>
         </div>
       </div>`;
@@ -376,12 +514,26 @@ function render(filter){
   document.getElementById('empty').style.display=shown?'none':'block';
 }
 
-const chips=[...document.querySelectorAll('.chip')];
+const chips=[...document.querySelectorAll('#filters .chip[data-f]')];
 chips.forEach(c=>c.addEventListener('click',()=>{
   chips.forEach(x=>x.setAttribute('aria-pressed','false'));
   c.setAttribute('aria-pressed','true');
   render(c.dataset.f);
 }));
+
+// Jump to today's stage: reset to "All" so it's in the list, open it, scroll & flash.
+document.getElementById('todayBtn').addEventListener('click',()=>{
+  chips.forEach(x=>x.setAttribute('aria-pressed',x.dataset.f==='all'?'true':'false'));
+  render('all');
+  const el=list.querySelector('.stage[data-n="'+TODAY_N+'"]');
+  if(!el) return;
+  el.classList.add('open');
+  el.querySelector('.stage-btn').setAttribute('aria-expanded','true');
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+  void el.offsetWidth; el.classList.add('flash');
+  el.addEventListener('animationend',()=>el.classList.remove('flash'),{once:true});
+});
+
 render('all');
 </script>
 </body>
