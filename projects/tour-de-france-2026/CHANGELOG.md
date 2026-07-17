@@ -2,6 +2,21 @@
 
 All notable changes to this page are documented here.
 
+## 2026-07-17
+
+### Added
+
+- **Stage 13 result** (Dole → Belfort): Mauro Schmid (Team Jayco AlUla) won a two-up sprint from the breakaway ahead of Harold Tejada (XDS Astana Team), with Tom Pidcock (Q36.5 Pro Cycling) taking third at +2s and vaulting to 4th overall. Jersey standings unchanged at the top: Tadej Pogačar leads yellow and polka-dot, Mads Pedersen leads green, Juan Ayuso leads white.
+
+### Changed
+
+- Added `Team Jayco AlUla` (`JAY`) to the team-name constants for Mauro Schmid's stage 13 win.
+- Footer results note now reads "through Stage 13 · 17 Jul 2026".
+
+### Known limitations
+
+- Results data now covers Stages 1–13; Stage 14 onward has route/profile/notes but no podium or jerseys yet.
+
 ## 2026-07-16
 
 ### Added
