@@ -2,6 +2,20 @@
 
 All notable changes to this page are documented here.
 
+## 2026-07-19
+
+### Added
+
+- **Stage 14 result** (Mulhouse → Le Markstein): Tadej Pogačar (UAE Team Emirates-XRG) attacked on the Col du Haag inside the final 7km to solo to his fourth stage win of this Tour, 38 seconds ahead of teammate Isaac del Toro and Paul Seixas (Decathlon CMA CGM), who crossed together. Pogačar extends his overall lead and keeps the polka-dot jersey; Paul Seixas takes the white jersey from Juan Ayuso. Mads Pedersen still leads green.
+
+### Changed
+
+- Footer results note now reads "through Stage 14 · 18 Jul 2026".
+
+### Known limitations
+
+- Results data now covers Stages 1–14; Stage 15 onward has route/profile/notes but no podium or jerseys yet.
+
 ## 2026-07-17
 
 ### Added
