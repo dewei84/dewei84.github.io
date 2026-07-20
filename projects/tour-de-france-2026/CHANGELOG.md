@@ -2,6 +2,20 @@
 
 All notable changes to this page are documented here.
 
+## 2026-07-20
+
+### Added
+
+- **Stage 15 result** (Champagnole → Plateau de Solaison): Remco Evenepoel (Soudal Quick-Step) beat Tadej Pogačar in a reduced sprint at the top of the first-ever Tour finish on the Plateau de Solaison, with Isaac del Toro (UAE Team Emirates-XRG) 6 seconds back in third. Jonas Vingegaard abandoned earlier in the stage after a crash that fractured his collarbone. Pogačar keeps yellow and polka-dot, Mads Pedersen still leads green, and Isaac del Toro takes the white jersey from Paul Seixas.
+
+### Changed
+
+- Footer results note now reads "through Stage 15 · 19 Jul 2026".
+
+### Known limitations
+
+- Results data now covers Stages 1–15; Stage 16 onward has route/profile/notes but no podium or jerseys yet.
+
 ## 2026-07-19
 
 ### Added
