@@ -2,6 +2,20 @@
 
 All notable changes to this page are documented here.
 
+## 2026-07-21
+
+### Added
+
+- **Stage 16 result** (Évian-les-Bains → Thonon-les-Bains, the race's only individual time trial): Remco Evenepoel (Soudal Quick-Step) obliterated the 26.1 km course in 32'19" to take back-to-back stage wins, beating Tadej Pogačar (UAE Team Emirates-XRG) by 28 seconds and Mattias Skjelmose (Lidl-Trek) by 1'04" in third. Evenepoel trims his GC deficit but Pogačar keeps yellow with a commanding lead. Jerseys unchanged: Pogačar in yellow and polka-dot, Mads Pedersen in green, Isaac del Toro in white.
+
+### Changed
+
+- Footer results note now reads "through Stage 16 · 21 Jul 2026".
+
+### Known limitations
+
+- Results data now covers Stages 1–16; Stage 17 onward has route/profile/notes but no podium or jerseys yet.
+
 ## 2026-07-20
 
 ### Added
