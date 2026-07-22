@@ -463,10 +463,10 @@ function computeTodayStage(){
 const TODAY_N=computeTodayStage();
 
 // Live window: the pulsing "Live" indicator shows on the current day's stage
-// only while we're within LIVE_WINDOW_MIN (240 min = 4 h) of its start time.
+// only while we're within LIVE_WINDOW_MIN (300 min = 5 h) of its start time.
 // Start times are official Singapore time (GMT+8); build an absolute instant
 // with an explicit +08:00 offset so the window is correct in any viewer timezone.
-const LIVE_WINDOW_MIN=240;
+const LIVE_WINDOW_MIN=300;
 function stageStart(s){
   const p=s.date.split(' ');           // e.g. ["Sat","4","Jul"]
   const day=String(+p[1]).padStart(2,'0');
