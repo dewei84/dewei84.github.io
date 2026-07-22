@@ -6,7 +6,7 @@ All notable changes to this page are documented here.
 
 ### Added
 
-- **Live stage indicator.** The current day's stage now shows a pulsing red "Live" badge (replacing the "Today" tag) and a soft pulsing red ring while the race is on. The indicator only appears within 240 minutes (4 hours) of the stage's official start time — computed from the Singapore-time (GMT+8) start with an explicit `+08:00` offset so the window is correct in any viewer timezone. State is re-evaluated every 30 seconds, so the badge appears and disappears on its own as the window opens and closes without a page reload. Respects `prefers-reduced-motion` (badge stays visible but static, no pulsing).
+- **Live stage indicator.** The current day's stage now shows a pulsing red "Live" badge (replacing the "Today" tag) and a soft pulsing red ring while the race is on. The indicator only appears within 300 minutes (5 hours) of the stage's official start time — computed from the Singapore-time (GMT+8) start with an explicit `+08:00` offset so the window is correct in any viewer timezone. State is re-evaluated every 30 seconds, so the badge appears and disappears on its own as the window opens and closes without a page reload. Respects `prefers-reduced-motion` (badge stays visible but static, no pulsing).
 
 ### Fixed
 
