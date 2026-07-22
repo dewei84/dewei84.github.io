@@ -173,6 +173,24 @@
     100%{box-shadow:0 0 0 1.5px var(--jaune)}}
   .stage.is-today.flash{animation:flashRing 1.5s ease-out}
 
+  /* ---------- Live (racing now) ---------- */
+  .livetag{display:none;font-family:"Space Mono",monospace;font-size:10px;font-weight:700;
+    letter-spacing:.12em;text-transform:uppercase;background:var(--mtn);color:#fff;
+    padding:1px 8px 1px 6px;border-radius:999px;align-items:center;gap:5px;align-self:center}
+  .livetag .lvdot{width:7px;height:7px;border-radius:999px;background:#fff;
+    animation:livePulseDot 1.4s ease-in-out infinite}
+  @keyframes livePulseDot{0%,100%{opacity:.4;transform:scale(.6)}50%{opacity:1;transform:scale(1)}}
+  /* live stage overrides the today tag with a pulsing LIVE badge + red pulse ring */
+  .stage.is-live .todaytag{display:none}
+  .stage.is-live .livetag{display:inline-flex}
+  .stage.is-live > .stage-btn{border-color:var(--mtn)}
+  @keyframes livePulseRing{
+    0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--mtn) 55%,transparent),0 0 0 1.5px var(--mtn)}
+    70%{box-shadow:0 0 0 12px color-mix(in srgb,var(--mtn) 0%,transparent),0 0 0 1.5px var(--mtn)}
+    100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--mtn) 0%,transparent),0 0 0 1.5px var(--mtn)}}
+  .stage.is-live{animation:livePulseRing 2s ease-out infinite}
+  .stage.is-live:hover{box-shadow:0 0 0 1.5px var(--mtn),0 10px 26px -12px rgba(0,0,0,.45)}
+
   /* ---------- Podium (top 3) ---------- */
   .subhead{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.12em;
     text-transform:uppercase;color:var(--ink-soft);margin:2px 0 8px}
@@ -258,6 +276,8 @@
 
   @media(prefers-reduced-motion:reduce){
     *{transition:none !important}
+    .stage.is-live{animation:none !important;box-shadow:0 0 0 1.5px var(--mtn)}
+    .livetag .lvdot{animation:none !important}
   }
 </style>
 </head>
@@ -440,6 +460,34 @@ function computeTodayStage(){
 }
 const TODAY_N=computeTodayStage();
 
+// Live window: the pulsing "Live" indicator shows on the current day's stage
+// only while we're within LIVE_WINDOW_MIN (240 min = 4 h) of its start time.
+// Start times are official Singapore time (GMT+8); build an absolute instant
+// with an explicit +08:00 offset so the window is correct in any viewer timezone.
+const LIVE_WINDOW_MIN=240;
+function stageStart(s){
+  const p=s.date.split(' ');           // e.g. ["Sat","4","Jul"]
+  const day=String(+p[1]).padStart(2,'0');
+  const mon=String(MON[p[2]]+1).padStart(2,'0');
+  return new Date(`2026-${mon}-${day}T${s.sgt}:00+08:00`);
+}
+function isLive(s){
+  if(!s||s.rest||s.n!==TODAY_N) return false;
+  const start=stageStart(s).getTime();
+  if(isNaN(start)) return false;
+  const now=Date.now();
+  return now>=start && now<start+LIVE_WINDOW_MIN*60*1000;
+}
+// Toggle the .is-live class on the rendered card(s) without re-rendering,
+// so open drawers/filters stay put. Re-checked on an interval as the window opens/closes.
+function refreshLive(){
+  const s=stages.find(x=>!x.rest && x.n===TODAY_N);
+  const live=isLive(s);
+  list.querySelectorAll('.stage').forEach(el=>{
+    el.classList.toggle('is-live', live && +el.dataset.n===TODAY_N);
+  });
+}
+
 const list=document.getElementById('list');
 function render(filter){
   list.innerHTML='';
@@ -495,7 +543,7 @@ function render(filter){
           <span class="terr-dot" style="background:${t.c}"></span>
         </span>
         <span class="smid">
-          <span class="sroute">${s.from}<span class="to">→ ${s.to}</span>${s.n===TODAY_N?'<span class="todaytag">Today</span>':''}</span>
+          <span class="sroute">${s.from}<span class="to">→ ${s.to}</span>${s.n===TODAY_N?'<span class="todaytag">Today</span><span class="livetag"><span class="lvdot"></span>Live</span>':''}</span>
           <span class="smeta">
             <span class="badge" style="background:${t.c}">${s.label}</span>
             <span class="k">${s.km} km</span>
@@ -530,6 +578,7 @@ function render(filter){
     list.appendChild(el);
   });
   document.getElementById('empty').style.display=shown?'none':'block';
+  refreshLive();
 }
 
 const chips=[...document.querySelectorAll('#filters .chip[data-f]')];
@@ -553,6 +602,9 @@ document.getElementById('todayBtn').addEventListener('click',()=>{
 });
 
 render('all');
+// Re-evaluate the live window every 30 s so the indicator appears/disappears
+// on its own as the 4-hour window opens and closes, without a page reload.
+setInterval(refreshLive,30000);
 </script>
 </body>
 </html>
