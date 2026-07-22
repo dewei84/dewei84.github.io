@@ -2,6 +2,12 @@
 
 All notable changes to this page are documented here.
 
+## 2026-07-22
+
+### Fixed
+
+- **Stage 17** (Chambéry → Voiron) terrain reclassified from "Hilly" to "Flat" to match the official ASO classification. Updates both the terrain colour code and the stage label; the route note ("Over 2,000 m of climbing but likely the sprinters' last dance") already reflected a sprint-friendly day and is unchanged.
+
 ## 2026-07-21
 
 ### Added
