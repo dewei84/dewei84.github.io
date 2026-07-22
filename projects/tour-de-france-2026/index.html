@@ -184,6 +184,8 @@
   .stage.is-live .todaytag{display:none}
   .stage.is-live .livetag{display:inline-flex}
   .stage.is-live > .stage-btn{border-color:var(--mtn)}
+  /* when expanded, match the drawer's border to the button so the red edge is uniform */
+  .stage.is-live.open .detail{border-color:var(--mtn)}
   @keyframes livePulseRing{
     0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--mtn) 55%,transparent),0 0 0 1.5px var(--mtn)}
     70%{box-shadow:0 0 0 12px color-mix(in srgb,var(--mtn) 0%,transparent),0 0 0 1.5px var(--mtn)}
