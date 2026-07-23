@@ -2,6 +2,20 @@
 
 All notable changes to this page are documented here.
 
+## 2026-07-23 (later)
+
+### Added
+
+- **Stage 18 result** (Voiron → Orcières-Merlette): Richard Carapaz (EF Education-EasyPost) rode a masterclass from the day's breakaway, attacking around 3.5 km from the summit to solo to victory 45 seconds ahead of Mauro Schmid (Team Jayco AlUla) and Matteo Jorgenson (Team Visma | Lease a Bike). Jerseys unchanged on the first Alpine day: Tadej Pogačar (UAE Team Emirates-XRG) keeps yellow and polka-dot — though his mountains lead is now just one point over Valentin Paret-Peintre — Mads Pedersen extends green, and Isaac del Toro holds white.
+
+### Changed
+
+- Footer results note now reads "through Stage 18 · 23 Jul 2026".
+
+### Known limitations
+
+- Results data now covers Stages 1–18; Stage 19 onward has route/profile/notes but no podium or jerseys yet.
+
 ## 2026-07-23
 
 ### Added
