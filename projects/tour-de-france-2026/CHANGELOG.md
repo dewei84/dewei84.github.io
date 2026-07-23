@@ -2,6 +2,20 @@
 
 All notable changes to this page are documented here.
 
+## 2026-07-23
+
+### Added
+
+- **Stage 17 result** (Chambéry → Voiron): Jasper Philipsen (Alpecin-Premier Tech) won an explosive sprint out of the day's breakaway ahead of Mauro Schmid (Team Jayco AlUla) and Olav Kooij (Decathlon CMA CGM). The win reignited the points battle — Mads Pedersen keeps green but his lead over Philipsen is down to seven points. Tadej Pogačar (UAE Team Emirates-XRG) keeps yellow and still leads the mountains classification; Isaac del Toro holds white.
+
+### Changed
+
+- Footer results note now reads "through Stage 17 · 22 Jul 2026".
+
+### Known limitations
+
+- Results data now covers Stages 1–17; Stage 18 onward has route/profile/notes but no podium or jerseys yet.
+
 ## 2026-07-22
 
 ### Added
