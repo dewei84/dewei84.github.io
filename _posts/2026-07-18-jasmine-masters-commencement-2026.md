@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Mummy's Masters Commencement Ceremony
+title: Mommy's Masters Commencement Ceremony
 categories: Together
 ---
 
@@ -12,4 +12,4 @@ categories: Together
     poster="https://dewei-memories.s3.ap-southeast-1.amazonaws.com/videos/posters/jasmine-masters-commencement-2026.jpg"> 
 </video>
 
-Mummy's officially smarter than all of us! -- _Actually she has always been the smarter one._
+Mommy's officially smarter than all of us! -- _Actually she has always been the smarter one._
