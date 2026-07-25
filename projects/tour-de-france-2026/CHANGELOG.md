@@ -2,6 +2,21 @@
 
 All notable changes to this page are documented here.
 
+## 2026-07-24
+
+### Added
+
+- **Stage 19 result** (Gap → Alpe d'Huez): Tadej Pogačar (UAE Team Emirates-XRG) launched a long-range attack and reeled in the breakaway inside the final two kilometres to win in the yellow jersey — a record-breaking ascent of the 21 hairpins and his first career stage win on Alpe d'Huez. Lenny Martinez (Bahrain Victorious) took second at six seconds and Richard Carapaz (EF Education-EasyPost) third at nine. Carapaz's mountain points prised the polka-dot jersey off Pogačar's shoulders by a single point; Pogačar keeps yellow (now 7:11 clear of Remco Evenepoel), Mads Pedersen holds green and Isaac del Toro white.
+
+### Changed
+
+- Footer results note now reads "through Stage 19 · 24 Jul 2026".
+- Added a `Bahrain Victorious` team constant for Lenny Martinez's podium placing.
+
+### Known limitations
+
+- Results data now covers Stages 1–19; Stage 20 onward has route/profile/notes but no podium or jerseys yet.
+
 ## 2026-07-23 (later)
 
 ### Added
