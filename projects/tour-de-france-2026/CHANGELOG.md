@@ -2,6 +2,24 @@
 
 All notable changes to this page are documented here.
 
+## 2026-07-25
+
+### Added
+
+- **Stage 20 result** (Le Bourg-d'Oisans → Alpe d'Huez, the queen stage): Richard Carapaz (EF Education-EasyPost) won back-to-back Alpe d'Huez stages, going clear from the day's breakaway and taking maximum points on three of the four classified climbs. Sepp Kuss (Team Visma | Lease a Bike) was alone in front inside the final 10 km but crashed twice — once at the exit of a tunnel, once on a descent — letting Carapaz through to a solo win in 4h 59' 39". Remco Evenepoel (Red Bull–BORA–hansgrohe) caught and passed Kuss in the final 500 m to take second at 26 seconds, with Kuss third at 31. Tadej Pogačar spent the last third of the stage pacing teammate Isaac del Toro, the pair finishing 4th and 5th at 1'05"; Pogačar keeps yellow, now 6:26 ahead of Evenepoel. Carapaz's haul puts the mountains classification mathematically out of reach (56 points clear of Pogačar), Mads Pedersen holds green and del Toro white.
+
+### Changed
+
+- Footer results note now reads "through Stage 20 · 25 Jul 2026".
+
+### Fixed
+
+- **Remco Evenepoel's team corrected** from `Soudal Quick-Step` to `Red Bull–BORA–hansgrohe` across Stages 2, 10, 15 and 16. He left Soudal Quick-Step at the end of 2025 and rides the 2026 Tour for Red Bull–BORA–hansgrohe; the old value was carried over from his 2024–25 team. Added a `RBH` team constant. Soudal Quick-Step remains correct for Tim Merlier's stage wins.
+
+### Known limitations
+
+- Results data now covers Stages 1–20; only Stage 21 (the Paris finale) has route/profile/notes but no podium or jerseys yet.
+
 ## 2026-07-24
 
 ### Added
