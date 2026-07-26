@@ -2,6 +2,23 @@
 
 All notable changes to this page are documented here.
 
+## 2026-07-26 (later)
+
+### Added
+
+- **Stage 21 result** (Paris → Paris, the Champs-Élysées finale): rain made the Montmartre cobbles slick and the shortened stage broke apart on the last of the three ascents, where **Tadej Pogačar attacked in the yellow jersey** and only Mathieu van der Poel (Alpecin-Premier Tech) could follow. The pair held around 8 seconds with 2 km to go; after one final turn from Pogačar, Van der Poel kicked inside the last 500 m to win on the Champs-Élysées ahead of teammate Jasper Philipsen and green-jersey winner Mads Pedersen (Lidl-Trek), both same time. No change at the top of any classification: Pogačar seals the overall, Pedersen green, Richard Carapaz polka-dot, Isaac del Toro white.
+- **Finale panel** below the stage list — a champion card carrying the final general classification (Pogačar 73h 56′ 26″, Remco Evenepoel +6:26, Isaac del Toro +9:42) and a short write-up on **UAE Team Emirates' five Tour de France titles**: 2020, 2021, 2024, 2025 and 2026, all five won by Pogačar, with a table of each win's year, rider and winning margin (2026 row highlighted). Covers the team's 2025 rebrand to UAE Team Emirates-XRG, its six stage wins and two riders on the final podium this year, and Pogačar equalling the all-time record of five titles held by Anquetil, Merckx, Hinault and Indurain. Styled with the page's existing tokens (Space Mono subheads, `--jaune` accent, `--card`/`--line` surfaces); works in light and dark and reflows to a two-column list under 560 px.
+
+### Changed
+
+- Stage 21 note extended with the race narrative (rain, the Pogačar/Van der Poel move on the final Montmartre ascent, the sprint), and its description of the reroute switched to past tense now that the stage has been run.
+- Footer results note now reads "all 21 stages, complete through the finish in Paris · 26 Jul 2026" and lists the four final jersey winners. Added Cycling Weekly to the sources line.
+
+### Known limitations
+
+- The 1,000 m climbing figure for the revised Stage 21 remains the rounded pre-stage estimate, not an ASO-published profile.
+- Stage 21 podium gaps are recorded as `s.t.` per the published result; the sub-second sprint margins are not broken out.
+
 ## 2026-07-26
 
 ### Changed
