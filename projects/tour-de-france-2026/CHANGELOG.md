@@ -2,6 +2,23 @@
 
 All notable changes to this page are documented here.
 
+## 2026-07-26
+
+### Changed
+
+- **Stage 21 shortened from 133 km to 89 km.** Wildfires around Arcachon Bay (Gironde) and Biscarrosse (Landes) have burned more than 36,000 hectares, and the interior ministry redeployed the police originally mobilised for the race, so ASO cancelled the Thoiry start. The teams are still presented in Thoiry, then bussed to Paris for a real start on the Champs-Élysées, with two extra laps of the avenue added ahead of the three Montmartre ascents, which are unchanged (the last crests 10.3 km from the line).
+  - Route now reads `Paris → Paris` instead of `Thoiry → Paris`.
+  - Distance `133` → `89` km; total climbing `1,295` → `1,000` m.
+  - Start time `22:30` → `23:50` SGT (17:50 CEST, 1h20 later than planned).
+  - Stage note rewritten to explain the change.
+- Header total distance `3,290 km` → `3,246 km`, with a footer line recording the original figure and why it changed.
+- Footer start-times note: the Paris finale entry now gives the revised 23:50 start and flags that, with no neutral transfer left, it is the real start rather than a *départ fictif*.
+
+### Known limitations
+
+- Results data still covers Stages 1–20; Stage 21 has route/profile/notes but no podium or jerseys until the finale is run.
+- The 1,000 m climbing figure for the revised Stage 21 is the rounded number being quoted in previews of the new route, not an ASO-published profile — treat it as approximate.
+
 ## 2026-07-25
 
 ### Added

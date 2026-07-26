@@ -293,7 +293,7 @@
     </div>
     <div class="stats">
       <div class="stat"><div class="n">21</div><div class="l">Stages</div></div>
-      <div class="stat"><div class="n">3,290<span style="font-size:14px"> km</span></div><div class="l">Total distance</div></div>
+      <div class="stat"><div class="n">3,246<span style="font-size:14px"> km</span></div><div class="l">Total distance</div></div>
       <div class="stat"><div class="n">8</div><div class="l">Mountain stages</div></div>
       <div class="stat"><div class="n">2</div><div class="l">Time trials</div></div>
       <div class="stat"><div class="n">2</div><div class="l">Rest days</div></div>
@@ -313,9 +313,9 @@
   <div class="empty" id="empty">No stages match that terrain.</div>
 
   <footer>
-    Distances &amp; profiles: ProCyclingStats / ASO official 2026 route. Terrain classed by total climbing and finish type.<br>
+    Distances &amp; profiles: ProCyclingStats / ASO official 2026 route. Terrain classed by total climbing and finish type. Stage 21 was cut from 133 km to 89 km on 25 Jul when ASO moved the start from Thoiry to the Champs-Élysées, so the total distance is now 3,246 km rather than the 3,290 km originally rolled out.<br>
     Results — stage podium (top 3 + teams) and the four classification leaders (yellow / green / polka-dot / white) — shown for completed stages through Stage 20 · 25 Jul 2026. Sources: Wikipedia (2026 Tour de France), ProCyclingStats &amp; Cyclingnews. Stage 1 was a team time trial, so it has no individual winner — the podium lists teams and their times (Jonas Vingegaard took the first yellow jersey as Visma's best-placed rider).<br>
-    Start times are the official neutral roll-out (départ fictif) per ASO's 2026 pattern, converted from CEST (GMT+2) to Singapore time (GMT+8, +6h): flat/hilly road stages 19:05, mountain stages 18:15, Stage 1 team time trial 23:05, Stage 16 individual time trial first rider 18:30, Paris finale 22:30. Exact times can shift slightly per stage — check letour.fr on the day.
+    Start times are the official neutral roll-out (départ fictif) per ASO's 2026 pattern, converted from CEST (GMT+2) to Singapore time (GMT+8, +6h): flat/hilly road stages 19:05, mountain stages 18:15, Stage 1 team time trial 23:05, Stage 16 individual time trial first rider 18:30. The Paris finale was scheduled for 22:30 but now starts at 23:50 (17:50 CEST) on the Champs-Élysées after the route was shortened; with no neutral transfer left, that is the real start. Exact times can shift slightly per stage — check letour.fr on the day.
   </footer>
 </div>
 
@@ -364,8 +364,8 @@ const stages=[
   note:'Short, punchy, and explosive — the first of back-to-back Alpe d\u2019Huez finishes via the traditional 21 hairpins.'},
  {n:20, type:'Road', terr:M, date:'Sat 25 Jul', from:'Le Bourg-d\u2019Oisans', to:'Alpe d\u2019Huez', km:170.9, vm:5624, sgt:'18:15', label:'Mountains',
   note:'The <b>queen stage.</b> Croix de Fer, Télégraphe, Galibier (2,642 m — the Tour\u2019s roof) and Col de Sarenne before a second summit at Alpe d\u2019Huez. 5,600 m of climbing.'},
- {n:21, type:'Road', terr:F, date:'Sun 26 Jul', from:'Thoiry', to:'Paris', km:133, vm:1295, sgt:'22:30', label:'Flat',
-  note:'The finale to the Champs-Élysées, with three ascents of the Montmartre climb from the 2024 Olympics before the run to the line.'},
+ {n:21, type:'Road', terr:F, date:'Sun 26 Jul', from:'Paris', to:'Paris', km:89, vm:1000, sgt:'23:50', label:'Flat',
+  note:'<b>Shortened from 133 km to 89 km.</b> With police redeployed to the wildfires burning around Arcachon Bay and Biscarrosse, ASO scrapped the Thoiry start: the teams are still presented there, then bussed to Paris for a real start on the Champs-Élysées, an hour and twenty minutes later than planned. Two extra laps of the avenue are added, and all three ascents of the Montmartre climb from the 2024 Olympics survive — the last cresting 10.3 km from the line.'},
 ];
 
 // Race results for completed stages (sources: Wikipedia 2026 Tour de France, ProCyclingStats, Cyclingnews).
