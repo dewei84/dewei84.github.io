@@ -270,6 +270,36 @@
     padding:6px 12px;display:inline-block;background:var(--paper);
   }
 
+  /* ---------- Finale / champion panel ---------- */
+  .finale{margin:30px 0 0;border:1px solid var(--line);border-radius:14px;
+    background:var(--card);box-shadow:var(--shadow);overflow:hidden}
+  .finale-head{padding:20px 20px 18px;border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,color-mix(in srgb,var(--jaune) 20%,var(--card)),var(--card))}
+  .finale h2{font-family:"Archivo Expanded","Archivo",sans-serif;font-weight:800;
+    font-size:clamp(20px,4.2vw,30px);line-height:1.06;letter-spacing:-.01em;
+    margin:9px 0 0;text-transform:uppercase}
+  .finale-sub{font-family:"Space Mono",monospace;font-size:13px;color:var(--ink-soft);
+    margin:9px 0 0;line-height:1.5}
+  .finale-in{padding:16px 20px 20px}
+  .finale .podium{margin-bottom:20px}
+  .finale .subhead{margin-top:0}
+  .uae p{font-size:15px;line-height:1.6;color:var(--ink-soft);margin:0 0 13px}
+  .uae p b{color:var(--ink);font-weight:600}
+  .wins{list-style:none;margin:2px 0 0;padding:0;border:1px solid var(--line);
+    border-radius:10px;overflow:hidden}
+  .wins li{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:baseline;
+    padding:9px 14px;border-top:1px solid var(--line);
+    font-family:"Space Mono",monospace;font-size:13px}
+  .wins li:first-child{border-top:0}
+  .wins li.latest{background:color-mix(in srgb,var(--jaune) 20%,transparent)}
+  .wins .wy{font-weight:700;color:var(--ink)}
+  .wins .wr{font-family:"Archivo",sans-serif;font-weight:600;font-size:14.5px;color:var(--ink)}
+  .wins .wm{color:var(--ink-soft);text-align:right}
+  @media(max-width:560px){
+    .wins li{grid-template-columns:52px 1fr;row-gap:2px}
+    .wins .wm{grid-column:2;text-align:left}
+  }
+
   footer{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);
     font-family:"Space Mono",monospace;font-size:11.5px;color:var(--ink-soft);line-height:1.7}
   footer a{color:var(--ink)}
@@ -312,9 +342,70 @@
   <div class="list" id="list"></div>
   <div class="empty" id="empty">No stages match that terrain.</div>
 
+  <section class="finale">
+    <div class="finale-head">
+      <div class="subhead">Final result · Paris, 26 July 2026</div>
+      <h2>Pogačar wins his fifth Tour</h2>
+      <div class="finale-sub">
+        73h 56′ 26″ · UAE Team Emirates-XRG · 5 stage wins of his own<br>
+        Equals the all-time record of five titles held by Anquetil, Merckx, Hinault and Indurain.
+      </div>
+    </div>
+    <div class="finale-in">
+      <div class="subhead">Final general classification</div>
+      <div class="podium">
+        <div class="pcard p1">
+          <span class="prank">1</span>
+          <span class="pinfo"><span class="pname">Tadej Pogačar</span><span class="pteam">UAE Team Emirates-XRG</span></span>
+          <span class="pgap">73h 56′ 26″</span>
+        </div>
+        <div class="pcard p2">
+          <span class="prank">2</span>
+          <span class="pinfo"><span class="pname">Remco Evenepoel</span><span class="pteam">Red Bull–BORA–hansgrohe</span></span>
+          <span class="pgap">+6:26</span>
+        </div>
+        <div class="pcard p3">
+          <span class="prank">3</span>
+          <span class="pinfo"><span class="pname">Isaac del Toro</span><span class="pteam">UAE Team Emirates-XRG</span></span>
+          <span class="pgap">+9:42</span>
+        </div>
+      </div>
+
+      <div class="uae">
+        <div class="subhead">Five Tours for UAE Team Emirates</div>
+        <p>
+          Paris makes it <b>five Tour de France titles for UAE Team Emirates in seven editions</b> — 2020, 2021,
+          2024, 2025 and now 2026. Every one of them belongs to the same rider: Tadej Pogačar has won all five,
+          and no other rider has ever won the Tour for the team. The only gap in the run is Jonas Vingegaard's
+          back-to-back victories in 2022 and 2023.
+        </p>
+        <p>
+          The 2026 edition was the most complete of the five. UAE took <b>six of the 21 stages</b> — Pogačar on
+          Stages 3, 6, 10, 14 and 19, Isaac del Toro on Stage 2 — and finished with <b>two riders on the final
+          podium</b>, Pogačar in yellow and del Toro third overall and in the white jersey he had worn since the
+          Plateau de Solaison. Pogačar also led the mountains classification for most of three weeks before
+          Richard Carapaz took the polka dots off him on Alpe d'Huez.
+        </p>
+        <p>
+          The squad has raced under two names across the run: <b>UAE Team Emirates</b> for the 2020, 2021 and 2024
+          wins, and <b>UAE Team Emirates-XRG</b> since the 2025 rebrand. Pogačar's fifth title makes him the fifth
+          rider in the race's history to reach five, joining Jacques Anquetil, Eddy Merckx, Bernard Hinault and
+          Miguel Indurain — and at 27 he is the youngest of them to get there.
+        </p>
+        <ol class="wins">
+          <li><span class="wy">2020</span><span class="wr">Tadej Pogačar</span><span class="wm">+59″ over Primož Roglič</span></li>
+          <li><span class="wy">2021</span><span class="wr">Tadej Pogačar</span><span class="wm">+5:20 over Jonas Vingegaard</span></li>
+          <li><span class="wy">2024</span><span class="wr">Tadej Pogačar</span><span class="wm">+6:17 over Jonas Vingegaard</span></li>
+          <li><span class="wy">2025</span><span class="wr">Tadej Pogačar</span><span class="wm">+4:24 over Jonas Vingegaard</span></li>
+          <li class="latest"><span class="wy">2026</span><span class="wr">Tadej Pogačar</span><span class="wm">+6:26 over Remco Evenepoel</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
   <footer>
     Distances &amp; profiles: ProCyclingStats / ASO official 2026 route. Terrain classed by total climbing and finish type. Stage 21 was cut from 133 km to 89 km on 25 Jul when ASO moved the start from Thoiry to the Champs-Élysées, so the total distance is now 3,246 km rather than the 3,290 km originally rolled out.<br>
-    Results — stage podium (top 3 + teams) and the four classification leaders (yellow / green / polka-dot / white) — shown for completed stages through Stage 20 · 25 Jul 2026. Sources: Wikipedia (2026 Tour de France), ProCyclingStats &amp; Cyclingnews. Stage 1 was a team time trial, so it has no individual winner — the podium lists teams and their times (Jonas Vingegaard took the first yellow jersey as Visma's best-placed rider).<br>
+    Results — stage podium (top 3 + teams) and the four classification leaders (yellow / green / polka-dot / white) — shown for all 21 stages, complete through the finish in Paris · 26 Jul 2026. Final classifications: Tadej Pogačar (yellow), Mads Pedersen (green), Richard Carapaz (polka-dot), Isaac del Toro (white). Sources: Wikipedia (2026 Tour de France), ProCyclingStats, Cyclingnews, Cycling Weekly &amp; CyclingUpToDate. Stage 1 was a team time trial, so it has no individual winner — the podium lists teams and their times (Jonas Vingegaard took the first yellow jersey as Visma's best-placed rider).<br>
     Start times are the official neutral roll-out (départ fictif) per ASO's 2026 pattern, converted from CEST (GMT+2) to Singapore time (GMT+8, +6h): flat/hilly road stages 19:05, mountain stages 18:15, Stage 1 team time trial 23:05, Stage 16 individual time trial first rider 18:30. The Paris finale was scheduled for 22:30 but now starts at 23:50 (17:50 CEST) on the Champs-Élysées after the route was shortened; with no neutral transfer left, that is the real start. Exact times can shift slightly per stage — check letour.fr on the day.
   </footer>
 </div>
@@ -365,7 +456,7 @@ const stages=[
  {n:20, type:'Road', terr:M, date:'Sat 25 Jul', from:'Le Bourg-d\u2019Oisans', to:'Alpe d\u2019Huez', km:170.9, vm:5624, sgt:'18:15', label:'Mountains',
   note:'The <b>queen stage.</b> Croix de Fer, Télégraphe, Galibier (2,642 m — the Tour\u2019s roof) and Col de Sarenne before a second summit at Alpe d\u2019Huez. 5,600 m of climbing.'},
  {n:21, type:'Road', terr:F, date:'Sun 26 Jul', from:'Paris', to:'Paris', km:89, vm:1000, sgt:'23:50', label:'Flat',
-  note:'<b>Shortened from 133 km to 89 km.</b> With police redeployed to the wildfires burning around Arcachon Bay and Biscarrosse, ASO scrapped the Thoiry start: the teams are still presented there, then bussed to Paris for a real start on the Champs-Élysées, an hour and twenty minutes later than planned. Two extra laps of the avenue are added, and all three ascents of the Montmartre climb from the 2024 Olympics survive — the last cresting 10.3 km from the line.'},
+  note:'<b>Shortened from 133 km to 89 km.</b> With police redeployed to the wildfires burning around Arcachon Bay and Biscarrosse, ASO scrapped the Thoiry start: the teams were still presented there, then bussed to Paris for a real start on the Champs-Élysées, an hour and twenty minutes later than planned. Two extra laps of the avenue were added, and all three ascents of the Montmartre climb from the 2024 Olympics survived — the last cresting 10.3 km from the line. Rain turned the cobbles slick and the finale broke apart: <b>Tadej Pogačar attacked in the yellow jersey</b> on the last time up Montmartre with only Mathieu van der Poel able to follow. The pair held around 8 seconds with 2 km left, and after one final turn from Pogačar, Van der Poel kicked inside the last 500 m to win on the Champs-Élysées ahead of the chasing bunch.'},
 ];
 
 // Race results for completed stages (sources: Wikipedia 2026 Tour de France, ProCyclingStats, Cyclingnews).
@@ -417,6 +508,8 @@ const results={
  19:{top3:[{name:'Tadej Pogačar', team:UAE, gap:'0:00'},{name:'Lenny Martinez', team:BAH, gap:'+0:06'},{name:'Richard Carapaz', team:EFE, gap:'+0:09'}],
   jerseys:{yellow:{name:'Tadej Pogačar',team:UAE}, green:{name:'Mads Pedersen',team:TRK}, polka:{name:'Richard Carapaz',team:EFE}, white:{name:'Isaac del Toro',team:UAE}}},
  20:{top3:[{name:'Richard Carapaz', team:EFE, gap:'0:00'},{name:'Remco Evenepoel', team:RBH, gap:'+0:26'},{name:'Sepp Kuss', team:VIS, gap:'+0:31'}],
+  jerseys:{yellow:{name:'Tadej Pogačar',team:UAE}, green:{name:'Mads Pedersen',team:TRK}, polka:{name:'Richard Carapaz',team:EFE}, white:{name:'Isaac del Toro',team:UAE}}},
+ 21:{top3:[{name:'Mathieu van der Poel', team:ALP, gap:'0:00'},{name:'Jasper Philipsen', team:ALP, gap:'s.t.'},{name:'Mads Pedersen', team:TRK, gap:'s.t.'}],
   jerseys:{yellow:{name:'Tadej Pogačar',team:UAE}, green:{name:'Mads Pedersen',team:TRK}, polka:{name:'Richard Carapaz',team:EFE}, white:{name:'Isaac del Toro',team:UAE}}},
 };
 
